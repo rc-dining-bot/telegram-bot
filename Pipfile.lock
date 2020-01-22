@@ -95,11 +95,25 @@
         },
         "pycparser": {
             "hashes": [
+<<<<<<< HEAD
                 "sha256:33d7e2a4f927fd2f7766fa2af86c9b00145574d92954cb0c149922cbad4a159f",
+=======
+>>>>>>> f0636d98bea2a0987dcd33275c7ccfe1f67e35eb
                 "sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3"
             ],
             "version": "==2.19"
         },
+<<<<<<< HEAD
+=======
+        "python-dotenv": {
+            "hashes": [
+                "sha256:007f0bacef4093a7588c1ed0a3d746a59c04f9bac00f68aaa4e9c30c5fe9429b",
+                "sha256:26a252f7931a448a78d3322d69b60e193d847a02fb96260de1d7b37aadcd46b3"
+            ],
+            "index": "pypi",
+            "version": "==0.10.4"
+        },
+>>>>>>> f0636d98bea2a0987dcd33275c7ccfe1f67e35eb
         "python-telegram-bot": {
             "hashes": [
                 "sha256:41608512a3025a04ff7472efcaae344ad7533a77ae207685bb10fc2fc8282f7b",
