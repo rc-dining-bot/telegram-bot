@@ -1,4 +1,6 @@
+import os
 import psycopg2
+from dotenv import load_dotenv
 
 _connection = None
 
@@ -9,7 +11,10 @@ def connect():
         try:
             # connect to the PostgreSQL server
             print("Connecting to the PostgreSQL database...")
-            _connection = psycopg2.connect(host="localhost",database="dinner",user="postgres",password="4697054Sdo")
+            _connection = psycopg2.connect(host="localhost",
+                                           database="dinner",
+                                           user="postgres",
+                                           password=os.getenv("DB_PASSWORD"))
 
             # create a cursor
             cur = _connection.cursor()

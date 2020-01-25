@@ -9,6 +9,8 @@ pylint = "*"
 
 [packages]
 python-telegram-bot = "*"
+psycopg2 = "*"
+dotenv = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.6"

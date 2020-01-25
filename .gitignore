@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 # intellij
-.idea/
+.idea
 
 # vscode
 .vscode
