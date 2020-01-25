@@ -2,9 +2,9 @@ def get_first_name(update):
     return update.message.chat.first_name
 
 
-def parse_menu(data):
+def parse_menu(template, data):
     menu = ''
-    for key in data:
+    for key in template:
         if key == 'day' or key == 'date' or key == '_id':
             continue
         menu += bold(key.capitalize()) + '\n\n'

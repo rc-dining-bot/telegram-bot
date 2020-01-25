@@ -2,12 +2,13 @@ import logging
 import os
 from dotenv import load_dotenv
 from telegram.ext import Updater, CommandHandler
-from src.util.const import (
+from util.const import (
     START, HELP, BREAKFAST,
     DINNER
 )
-from src.commands.meal import breakfast, dinner
-from src.commands.general import start, handle_help
+from commands.meal import breakfast, dinner
+from commands.general import start, handle_help
+from database import connect
 
 load_dotenv()
 
@@ -15,7 +16,6 @@ load_dotenv()
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
-
 
 def error(update, context):
     """Log Errors caused by Updates."""
@@ -27,7 +27,7 @@ def main():
     # Set use_context=True to use the new context based callbacks
     updater = Updater(token=os.getenv('TOKEN'), use_context=True)
 
-    # Get the dispatcher to register handlers
+    # Get the dispatcher to
     dp = updater.dispatcher
 
     # on different commands - answer in Telegram
@@ -50,4 +50,5 @@ def main():
 
 if __name__ == '__main__':
     logger.info("Bot is running")
+    connect()
     main()

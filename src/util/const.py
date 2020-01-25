@@ -41,6 +41,23 @@ COMMAND_LIST = \
 
 HELP_MSG = f'Hello, these are RC Dining Bot\'s commands:\n{COMMAND_LIST}'
 
+BREAKFAST_TEMPLATE = ['self_service',
+                      'western',
+                      'dim_sum_congee_noodle',
+                      'asian',
+                      'asian_vegetarian',
+                      'malay',
+                      'halal_vegetarian',
+                      'grab_and_go']
+DINNER_TEMPLATE = ['self_service',
+                   'western',
+                   'noodle',
+                   'asian',
+                   'vegetarian',
+                   'malay',
+                   'indian',
+                   'soup']
+
 
 def WELCOME_MSG(user_first_name):
     return f'Hello, {user_first_name}! Welcome! To get started, enter one of the following commands:\n\n' \

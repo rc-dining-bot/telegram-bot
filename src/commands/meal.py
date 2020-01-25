@@ -1,9 +1,12 @@
 import json
 import os.path
-from src.util.const import (
-    BREAKFAST, DINNER
+from util.const import (
+    BREAKFAST, BREAKFAST_TEMPLATE,
+    DINNER, DINNER_TEMPLATE
 )
-from src.util.util import parse_menu
+from util.util import parse_menu
+from database import connect
+import psycopg2.extras
 
 
 def breakfast(update, context):
@@ -16,7 +19,9 @@ def breakfast(update, context):
 
 def dinner(update, context):
     """Send the user dinner menu"""
-    with open(os.path.dirname(__file__) + '/../mock/dinner.json', 'r') as dn:
-        data = json.load(dn)
-    menu = parse_menu(data)
+    conn = connect()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute("SELECT * FROM menu")
+    menu = parse_menu(DINNER_TEMPLATE, cur.fetchone())
+    print(menu)
     update.message.reply_text(menu, parse_mode='HTML')
