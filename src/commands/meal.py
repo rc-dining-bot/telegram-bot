@@ -1,9 +1,9 @@
-from util.const import (
+from src.util.const import (
     BREAKFAST, BREAKFAST_TEMPLATE,
     DINNER, DINNER_TEMPLATE
 )
-from util.util import parse_menu
-from database import connect
+from src.util.util import parse_menu
+from src.database import connect
 import psycopg2.extras
 
 

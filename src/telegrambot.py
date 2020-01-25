@@ -2,13 +2,13 @@ import logging
 import os
 from dotenv import load_dotenv
 from telegram.ext import Updater, CommandHandler
-from util.const import (
+from src.util.const import (
     START, HELP, BREAKFAST,
     DINNER
 )
-from commands.meal import breakfast, dinner
-from commands.general import start, handle_help
-from database import connect
+from src.commands.meal import breakfast, dinner
+from src.commands.general import start, handle_help
+from src.database import connect
 
 load_dotenv()
 
@@ -16,6 +16,7 @@ load_dotenv()
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
+
 
 def error(update, context):
     """Log Errors caused by Updates."""

@@ -1,8 +1,11 @@
 import os
 import psycopg2
 from dotenv import load_dotenv
+load_dotenv()
 
+# global singleton connection
 _connection = None
+
 
 def connect():
     """ Connect to the PostgreSQL database server"""
