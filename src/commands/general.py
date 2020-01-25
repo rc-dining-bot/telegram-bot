@@ -1,4 +1,4 @@
-from util.const import WELCOME_MSG, HELP_MSG
+from src.util.const import WELCOME_MSG, HELP_MSG
 
 
 def start(update, context):

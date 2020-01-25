@@ -3,10 +3,13 @@ import os
 from dotenv import load_dotenv
 from telegram.ext import Updater, CommandHandler
 from src.util.const import (
-    START, HELP, BREAKFAST,
-    DINNER
+    START,
+    HELP,
+    BREAKFAST,
+    DINNER,
+    SETTINGS
 )
-from src.commands.meal import breakfast, dinner
+from src.commands.meal import handle_menu
 from src.commands.general import start, handle_help
 from src.database import connect
 
@@ -15,12 +18,12 @@ load_dotenv()
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
-logger = logging.getLogger(__name__)
+logging.getLogger(__name__)
 
 
 def error(update, context):
     """Log Errors caused by Updates."""
-    logger.warning('Update "%s" caused error "%s"', update, context.error)
+    logging.warning('Update "%s" caused error "%s"', update.update_id, context.error)
 
 
 def main():
@@ -34,8 +37,8 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler(START, start))
     dp.add_handler(CommandHandler(HELP, handle_help))
-    dp.add_handler(CommandHandler(BREAKFAST, breakfast))
-    dp.add_handler(CommandHandler(DINNER, dinner))
+    dp.add_handler(CommandHandler(BREAKFAST, handle_menu(meal=BREAKFAST)))
+    dp.add_handler(CommandHandler(DINNER, handle_menu(meal=DINNER)))
 
     # log all errors
     dp.add_error_handler(error)
@@ -50,6 +53,6 @@ def main():
 
 
 if __name__ == '__main__':
-    logger.info("Bot is running")
+    logging.info("Bot is running")
     connect()
     main()
