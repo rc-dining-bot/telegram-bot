@@ -1,6 +1,6 @@
 from src.util.const import (
-    BREAKFAST, BREAKFAST_TEMPLATE,
-    DINNER, DINNER_TEMPLATE
+    BREAKFAST,
+    DINNER
 )
 from src.util.messages import no_menu_msg, menu_msg
 from src.util.util import parse_menu
@@ -17,15 +17,14 @@ def handle_menu(meal):
         """Send the user menu"""
         # get menu from database
         conn = connect()
-        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute(menu_query(meal), (date.today(),))
         data = cur.fetchone()
 
         if data is None:  # if no menu, reply with no menu message
             update.message.reply_text(no_menu_msg(meal))
         else:  # else reply user of the menu
-            template = BREAKFAST_TEMPLATE if meal == BREAKFAST else DINNER_TEMPLATE
-            menu = menu_msg(date.today(), meal, parse_menu(template, data))
+            menu = menu_msg(date.today(), meal, parse_menu(data))
             # send formatted menu to client
             update.message.reply_text(menu, parse_mode='HTML')
 

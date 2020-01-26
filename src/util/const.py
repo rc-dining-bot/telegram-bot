@@ -37,21 +37,3 @@ COMMAND_LIST = \
     f'{BREAKFAST_COMMAND} (or {DINNER_COMMAND}) <day> - view the breakfast/dinner menu for a particular day\n' \
     'e.g. /breakfast tomorrow, /breakfast saturday, /dinner next tuesday\n\n' \
     'Give feedback for the bot at https://github.com/rc-dining-bot/telegram-bot'
-
-
-BREAKFAST_TEMPLATE = ['self_service',
-                      'western',
-                      'dim_sum_congee_noodle',
-                      'asian',
-                      'asian_vegetarian',
-                      'malay',
-                      'halal_vegetarian',
-                      'grab_and_go']
-DINNER_TEMPLATE = ['self_service',
-                   'western',
-                   'noodle',
-                   'asian',
-                   'vegetarian',
-                   'malay',
-                   'indian',
-                   'soup']

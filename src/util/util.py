@@ -1,10 +1,11 @@
 from src.util.formatting import bold, italicize
 
 
-def parse_menu(template, data):
+def parse_menu(data):
     menu = ''
-    print(data.keys)
     for key in data.keys():
+        if key == 'date':
+            continue
         menu += bold(key.capitalize()) + '\n'
         for item in data[key]:
             if item == 'OR':
