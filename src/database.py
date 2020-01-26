@@ -1,6 +1,7 @@
 import os
 import psycopg2
 import logging
+import sys
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -15,9 +16,9 @@ def connect():
         try:
             # connect to the PostgreSQL server
             logging.info("Connecting to the PostgreSQL database...")
-            _connection = psycopg2.connect(host="localhost",
-                                           database="rc_meal_bot",
-                                           user="postgres",
+            _connection = psycopg2.connect(host=os.getenv("HOST"),
+                                           database=os.getenv("DATABASE"),
+                                           user=os.getenv("DB_USER"),
                                            password=os.getenv("DB_PASSWORD"))
 
             # create a cursor
@@ -33,5 +34,6 @@ def connect():
 
             cur.close()
         except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
+            logging.fatal(error)
+            sys.exit(1)
     return _connection

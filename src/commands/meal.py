@@ -1,6 +1,7 @@
 from src.util.const import (
     BREAKFAST, BREAKFAST_TEMPLATE,
-    DINNER_TEMPLATE
+    DINNER_TEMPLATE,
+    MENU_MSG
 )
 from src.util.util import parse_menu
 from src.database import connect
@@ -19,10 +20,10 @@ def handle_menu(meal):
         data = cur.fetchone()
 
         if data is None:  # if no menu, reply with no menu message
-            update.message.reply_text(NO_MENU_MSG)
+            update.message.reply_text(NO_MENU_MSG(meal))
         else:             # else reply user of the menu
             template = BREAKFAST_TEMPLATE if meal == BREAKFAST else DINNER_TEMPLATE
-            menu = parse_menu(template, data)
+            menu = MENU_MSG(date.today(), meal, parse_menu(template, data))
             # send formatted menu to client
             update.message.reply_text(menu, parse_mode='HTML')
     return inner

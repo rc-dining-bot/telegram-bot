@@ -5,9 +5,7 @@ def get_first_name(update):
 def parse_menu(template, data):
     menu = ''
     for key in template:
-        if key == 'day' or key == 'date' or key == '_id':
-            continue
-        menu += bold(key.capitalize()) + '\n\n'
+        menu += bold(key.capitalize()) + '\n'
         for item in data[key]:
             if item == 'OR':
                 menu += italicize(item) + '\n'

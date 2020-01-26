@@ -41,8 +41,6 @@ COMMAND_LIST = \
 
 HELP_MSG = f'Hello, these are RC Dining Bot\'s commands:\n{COMMAND_LIST}'
 
-NO_MENU_MSG = 'Sorry, today has no menu.'
-
 BREAKFAST_TEMPLATE = ['self_service',
                       'western',
                       'dim_sum_congee_noodle',
