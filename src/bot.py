@@ -13,8 +13,6 @@ from src.commands.meal import handle_menu
 from src.commands.general import start, handle_help
 from src.database import connect
 
-load_dotenv()
-
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -54,5 +52,6 @@ def main():
 
 if __name__ == '__main__':
     logging.info("Bot is running")
+    load_dotenv()
     connect()
     main()

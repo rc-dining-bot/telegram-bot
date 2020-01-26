@@ -2,8 +2,6 @@ import os
 import psycopg2
 import logging
 import sys
-from dotenv import load_dotenv
-load_dotenv()
 
 # global singleton connection
 _connection = None
