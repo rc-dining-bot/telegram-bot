@@ -1,9 +1,16 @@
-from src.util.const import WELCOME_MSG, HELP_MSG
+from src.util.messages import welcome_msg, help_msg
+import logging
 
 
-def start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=WELCOME_MSG(update.message.chat.first_name))
+def handle_start(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text=welcome_msg(update.message.chat.first_name))
 
 
 def handle_help(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=HELP_MSG)
+    context.bot.send_message(chat_id=update.effective_chat.id, text=help_msg())
+
+
+def handle_error(update, context):
+    """Log Errors caused by Updates."""
+    logging.warning('Update "%s" caused error "%s"', update.update_id, context.error)
+

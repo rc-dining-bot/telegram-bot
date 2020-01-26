@@ -10,36 +10,34 @@ from src.util.const import (
     SETTINGS
 )
 from src.commands.meal import handle_menu
-from src.commands.general import start, handle_help
-from src.database import connect
+from src.commands.general import (
+    handle_start,
+    handle_help,
+    handle_error
+)
+from src.database.database import connect
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
-logging.getLogger(__name__)
-
-
-def error(update, context):
-    """Log Errors caused by Updates."""
-    logging.warning('Update "%s" caused error "%s"', update.update_id, context.error)
 
 
 def main():
     """Start the bot."""
     # Set use_context=True to use the new context based callbacks
-    updater = Updater(token=os.getenv('TOKEN'), use_context=True)
+    updater = Updater(token=os.getenv('RC_DINING_BOT_TOKEN'), use_context=True)
 
     # Get the dispatcher to
-    dp = updater.dispatcher
+    dispatcher = updater.dispatcher
 
     # on different commands - answer in Telegram
-    dp.add_handler(CommandHandler(START, start))
-    dp.add_handler(CommandHandler(HELP, handle_help))
-    dp.add_handler(CommandHandler(BREAKFAST, handle_menu(meal=BREAKFAST)))
-    dp.add_handler(CommandHandler(DINNER, handle_menu(meal=DINNER)))
+    dispatcher.add_handler(CommandHandler(START, handle_start))
+    dispatcher.add_handler(CommandHandler(HELP, handle_help))
+    dispatcher.add_handler(CommandHandler(BREAKFAST, handle_menu(meal=BREAKFAST)))
+    dispatcher.add_handler(CommandHandler(DINNER, handle_menu(meal=DINNER)))
 
     # log all errors
-    dp.add_error_handler(error)
+    dispatcher.add_error_handler(handle_error)
 
     # Start the Bot
     updater.start_polling()

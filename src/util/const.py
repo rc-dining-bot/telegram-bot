@@ -1,4 +1,4 @@
-"""List of constants"""
+# list of constants
 START = 'start'
 HELP = 'help'
 BREAKFAST = 'breakfast'
@@ -8,12 +8,12 @@ SETTINGS = 'settings'
 FAVORITE = 'favorite'
 NOTIFICATION = 'notification'
 HOME = 'home'
-"""Menu messages"""
+# menu messages
 BREAKFAST_COMMAND = f'/{BREAKFAST}';
 BREAKFAST_DESC = f'{BREAKFAST_COMMAND} - view today\'s breakfast menu\n'
 DINNER_COMMAND = f'DINNER'
 DINNER_DESC = f'{DINNER_COMMAND} - view today\'s dinner menu\n';
-"""Setting messages"""
+# setting messages
 SETTINGS_COMMAND = f'/{SETTINGS}'
 SETTINGS_DESC = f'{SETTINGS_COMMAND} - customize menu visibility and display settings\n'
 ADD_FAVORITE_COMMAND = '/add_favorite'
@@ -39,8 +39,6 @@ COMMAND_LIST = \
     'Give feedback for the bot at https://github.com/rc-dining-bot/telegram-bot'
 
 
-HELP_MSG = f'Hello, these are RC Dining Bot\'s commands:\n{COMMAND_LIST}'
-
 BREAKFAST_TEMPLATE = ['self_service',
                       'western',
                       'dim_sum_congee_noodle',
@@ -57,32 +55,3 @@ DINNER_TEMPLATE = ['self_service',
                    'malay',
                    'indian',
                    'soup']
-
-
-def WELCOME_MSG(user_first_name):
-    return f'Hello, {user_first_name}! Welcome! To get started, enter one of the following commands:\n\n' \
-           f'{COMMAND_LIST}'
-
-
-def NO_MENU_MSG(meal):
-    return f'Sorry, OHS does not have a {meal} menu for this day.'
-
-
-def MENU_MSG(date, meal, menu):
-    return f'{meal} - {date}\n\n{menu}'
-
-
-def FAILED_TO_PARSE_DATE_MSG(entered_date):
-    return f'Sorry, I don\'t understand the date {entered_date} :('
-
-
-def FAVORITES_MSG(favorites):
-    return f'These are your current favorites:\n{favorites}'
-
-
-def ADDED_FAVORITES_MSG(favorites):
-    return f'You have updated your favorites. {FAVORITES_MSG(favorites)}'
-
-
-def MENU_HAS_FAVORITE_MSG(favorite):
-    return f'Hey! This meal contains {favorite}'
