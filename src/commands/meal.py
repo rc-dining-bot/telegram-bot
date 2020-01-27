@@ -17,9 +17,9 @@ def handle_menu(meal):
         """Send the user menu"""
         # get menu from database
         conn = connect()
-        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-        cur.execute(menu_query(meal), (date.today(),))
-        data = cur.fetchone()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cursor.execute(menu_query(meal), (date.today(),))
+        data = cursor.fetchone()
 
         if data is None:  # if no menu, reply with no menu message
             update.message.reply_text(no_menu_msg(meal))

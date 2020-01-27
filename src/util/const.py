@@ -8,12 +8,13 @@ SETTINGS = 'settings'
 FAVORITE = 'favorite'
 NOTIFICATION = 'notification'
 HOME = 'home'
-# menu messages
+HIDE_CUISINE = 'hidden'
+# menu commands
 BREAKFAST_COMMAND = f'/{BREAKFAST}';
 BREAKFAST_DESC = f'{BREAKFAST_COMMAND} - view today\'s breakfast menu\n'
 DINNER_COMMAND = f'DINNER'
 DINNER_DESC = f'{DINNER_COMMAND} - view today\'s dinner menu\n';
-# setting messages
+# setting commands
 SETTINGS_COMMAND = f'/{SETTINGS}'
 SETTINGS_DESC = f'{SETTINGS_COMMAND} - customize menu visibility and display settings\n'
 ADD_FAVORITE_COMMAND = '/add_favorite'
@@ -29,6 +30,7 @@ SET_BREAKFAST_NOTIFICATION_DESC = f'{SET_BREAKFAST_NOTIFICATION_COMMAND} - set b
 SET_DINNER_NOTIFICATION_COMMAND = '/set_dinner_time';
 SET_DINNER_NOTIFICATION_DESC = f'{SET_DINNER_NOTIFICATION_COMMAND} - set dinner notification time (HH:MM). ' \
                                f'Notifications after 21:30 will be for the next day\'s dinner\n '
+
 
 COMMAND_LIST = \
     f'{BREAKFAST_DESC}{DINNER_DESC}' \

@@ -4,3 +4,7 @@ def bold(text):
 
 def italicize(text):
     return f'<i>{text}</i>'
+
+
+def normalize(text):
+    return text.replace('_', ' ').title()
