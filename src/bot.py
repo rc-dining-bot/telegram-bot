@@ -2,20 +2,20 @@ import logging
 import os
 from dotenv import load_dotenv
 from telegram.ext import Updater, CommandHandler
-from src.util.const import (
+from util.const import (
     START,
     HELP,
     BREAKFAST,
     DINNER,
     SETTINGS
 )
-from src.commands.meal import handle_menu
-from src.commands.general import (
+from commands.meal import handle_menu
+from commands.general import (
     handle_start,
     handle_help,
     handle_error
 )
-from src.database.database import connect
+from database.database import connect
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -33,7 +33,8 @@ def main():
     # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler(START, handle_start))
     dispatcher.add_handler(CommandHandler(HELP, handle_help))
-    dispatcher.add_handler(CommandHandler(BREAKFAST, handle_menu(meal=BREAKFAST)))
+    dispatcher.add_handler(CommandHandler(
+        BREAKFAST, handle_menu(meal=BREAKFAST)))
     dispatcher.add_handler(CommandHandler(DINNER, handle_menu(meal=DINNER)))
 
     # log all errors

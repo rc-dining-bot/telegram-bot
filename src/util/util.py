@@ -1,4 +1,4 @@
-from src.util.formatting import bold, italicize
+from util.formatting import bold, italicize
 
 
 def parse_menu(data):
@@ -14,4 +14,3 @@ def parse_menu(data):
                 menu += item + '\n'
         menu += '\n'
     return menu
-

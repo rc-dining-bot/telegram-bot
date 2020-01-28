@@ -1,11 +1,11 @@
-from src.util.const import (
+from util.const import (
     BREAKFAST,
     DINNER
 )
-from src.util.messages import no_menu_msg, menu_msg
-from src.util.util import parse_menu
-from src.database.database import connect
-from src.database.queries import menu_query
+from util.messages import no_menu_msg, menu_msg
+from util.util import parse_menu
+from database.database import connect
+from database.queries import menu_query
 import psycopg2.extras
 from datetime import date
 

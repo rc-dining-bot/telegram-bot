@@ -8,4 +8,4 @@ change of data format in end of 2019.
 
 ## Setup Instructions
 1. `pipenv install`
-2. `python src/bot.py`
+2. `pipenv run python src/bot.py`
