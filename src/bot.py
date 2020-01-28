@@ -41,6 +41,7 @@ def main():
 
     # add callback_query handler
     dispatcher.add_handler(CallbackQueryHandler(handle_start, pattern='start.+'))
+    dispatcher.add_handler(CallbackQueryHandler(handle_settings, pattern='settings.home'))
     dispatcher.add_handler(CallbackQueryHandler(handle_hidden_cuisine, pattern='settings.hidden'))
     dispatcher.add_handler(CallbackQueryHandler(handle_hide_cuisine, pattern='menu.+'))
 

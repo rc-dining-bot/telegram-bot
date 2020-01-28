@@ -20,7 +20,9 @@ def connect():
         _connection = psycopg2.connect(host=os.getenv("RC_DINING_BOT_HOST"),
                                        database=os.getenv("RC_DINING_BOT_DATABASE"),
                                        user=os.getenv("RC_DINING_BOT_DB_USER"),
-                                       password=os.getenv("RC_DINING_BOT_DB_PASSWORD"))
+                                       password=os.getenv("RC_DINING_BOT_DB_PASSWORD"),
+                                       connect_timeout=10
+                                       )
 
         # create a cursor
         cursor = _connection.cursor()

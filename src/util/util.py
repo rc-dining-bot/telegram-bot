@@ -2,13 +2,13 @@ import psycopg2.extras
 from src.util.formatting import bold, italicize
 from src.util.const import HIDE_CUISINE
 from src.database.database import connect
-from src.database.queries import settings_query, settings_insert, settings_update
+from src.database.queries import settings_query, settings_insert, settings_update, menu_query
 
 
-def parse_menu(data):
+def parse_menu(data, hidden_cuisines):
     menu = ''
     for key in data.keys():
-        if key == 'date':
+        if key == 'date' or key in hidden_cuisines:
             continue
         menu += bold(key.capitalize()) + '\n'
         for item in data[key]:
@@ -23,6 +23,14 @@ def parse_menu(data):
 def parse_callback(data):
     split_data = data.split('.')
     return split_data[0], split_data[1]
+
+
+def get_menu_from_db(meal, date):
+    # get menu from database
+    conn = connect()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cursor.execute(menu_query(meal), (date,))
+    return cursor.fetchone()
 
 
 def get_hidden_cuisines(chat_id):
@@ -42,19 +50,15 @@ def get_hidden_cuisines(chat_id):
 
 def hide_cuisine(chat_id, cuisine_to_hide):
     hidden_cuisines = get_hidden_cuisines(chat_id)
-    print(cuisine_to_hide)
-    print(hidden_cuisines)
     if cuisine_to_hide in hidden_cuisines:
         hidden_cuisines.remove(cuisine_to_hide)
     else:
         hidden_cuisines.append(cuisine_to_hide)
-    print(cuisine_to_hide)
-    print(hidden_cuisines)
     conn = connect()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute(settings_update(HIDE_CUISINE), (hidden_cuisines, chat_id))
+    conn.commit()
     cursor.execute(settings_query(HIDE_CUISINE), (chat_id,))
     data = cursor.fetchone()
 
-    print(data[0])
     return data[0]

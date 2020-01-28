@@ -3,7 +3,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 def settings_kb():
     button_list = [
-        InlineKeyboardButton("Toggle Menu Visibility", callback_data="settings.menu"),
+        InlineKeyboardButton("Toggle Menu Visibility", callback_data="settings.hidden"),
         InlineKeyboardButton("View Favourite Foods", callback_data="settings.favorite"),
         InlineKeyboardButton("View Notification Settings", callback_data="settings.notification"),
         InlineKeyboardButton("Back to start", callback_data="start.home")

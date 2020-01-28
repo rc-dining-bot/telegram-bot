@@ -14,4 +14,3 @@ def handle_help(update, context):
 def handle_error(update, context):
     """Log Errors caused by Updates."""
     logging.warning('Update "%s" caused error "%s"', update.update_id, context.error)
-
