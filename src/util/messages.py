@@ -1,4 +1,4 @@
-from src.util.const import COMMAND_LIST
+from util.const import COMMAND_LIST
 
 
 def help_msg():
