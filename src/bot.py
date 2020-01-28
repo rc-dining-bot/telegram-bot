@@ -40,10 +40,10 @@ def main():
     dispatcher.add_handler(CommandHandler(HIDE_CUISINE, handle_hidden_cuisine))
 
     # add callback_query handler
-    dispatcher.add_handler(CallbackQueryHandler(handle_start, pattern='start.+'))
-    dispatcher.add_handler(CallbackQueryHandler(handle_settings, pattern='settings.home'))
-    dispatcher.add_handler(CallbackQueryHandler(handle_hidden_cuisine, pattern='settings.hidden'))
-    dispatcher.add_handler(CallbackQueryHandler(handle_hide_cuisine, pattern='menu.+'))
+    dispatcher.add_handler(CallbackQueryHandler(handle_start, pattern='^start.+'))
+    dispatcher.add_handler(CallbackQueryHandler(handle_settings, pattern='^settings.home'))
+    dispatcher.add_handler(CallbackQueryHandler(handle_hidden_cuisine, pattern='^settings.hidden'))
+    dispatcher.add_handler(CallbackQueryHandler(handle_hide_cuisine, pattern='^menu.+'))
 
     # log all errors
     dispatcher.add_error_handler(handle_error)

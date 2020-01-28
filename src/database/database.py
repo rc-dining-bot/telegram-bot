@@ -4,6 +4,8 @@ import logging
 import sys
 
 # global singleton connection
+from database.queries import menu_query
+
 _connection = None
 
 
@@ -37,3 +39,11 @@ def connect():
     except Exception as error:
         logging.fatal(error)
         sys.exit(1)
+
+
+def get_menu_from_db(meal, date):
+    # get menu from database
+    conn = connect()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cursor.execute(menu_query(meal), (date,))
+    return cursor.fetchone()

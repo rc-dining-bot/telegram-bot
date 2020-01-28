@@ -21,16 +21,8 @@ def parse_menu(data, hidden_cuisines):
 
 
 def parse_callback(data):
-    split_data = data.split('.')
+    split_data = data.split('.', 1)
     return split_data[0], split_data[1]
-
-
-def get_menu_from_db(meal, date):
-    # get menu from database
-    conn = connect()
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    cursor.execute(menu_query(meal), (date,))
-    return cursor.fetchone()
 
 
 def get_hidden_cuisines(chat_id):
