@@ -2,7 +2,7 @@ import logging
 import os
 from dotenv import load_dotenv
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
-from src.util.const import (
+from util.const import (
     START,
     HELP,
     BREAKFAST,
@@ -10,14 +10,14 @@ from src.util.const import (
     SETTINGS,
     HIDE_CUISINE
 )
-from src.commands.meal import handle_menu
-from src.commands.general import (
+from commands.meal import handle_menu
+from commands.general import (
     handle_start,
     handle_help,
     handle_error
 )
-from src.commands.settings import handle_settings, handle_hidden_cuisine, handle_hide_cuisine
-from src.database.database import connect
+from commands.settings import handle_settings, handle_hidden_cuisine, handle_hide_cuisine
+from database.database import connect
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -26,15 +26,17 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 def main():
     """Start the bot."""
-
     # Set use_context=True to use the new context based callbacks
     updater = Updater(token=os.getenv('RC_DINING_BOT_TOKEN'), use_context=True)
+
+    # Get the dispatcher to
     dispatcher = updater.dispatcher
 
     # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler(START, handle_start))
     dispatcher.add_handler(CommandHandler(HELP, handle_help))
-    dispatcher.add_handler(CommandHandler(BREAKFAST, handle_menu(meal=BREAKFAST)))
+    dispatcher.add_handler(CommandHandler(
+        BREAKFAST, handle_menu(meal=BREAKFAST)))
     dispatcher.add_handler(CommandHandler(DINNER, handle_menu(meal=DINNER)))
     dispatcher.add_handler(CommandHandler(SETTINGS, handle_settings))
     dispatcher.add_handler(CommandHandler(HIDE_CUISINE, handle_hidden_cuisine))

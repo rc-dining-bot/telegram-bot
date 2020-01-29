@@ -1,8 +1,8 @@
 import psycopg2.extras
-from src.util.formatting import bold, italicize
-from src.util.const import HIDE_CUISINE
-from src.database.database import connect
-from src.database.queries import settings_query, settings_insert, settings_update, menu_query
+from util.formatting import bold, italicize
+from util.const import HIDE_CUISINE
+from database.database import connect
+from database.queries import settings_query, settings_insert, settings_update, menu_query
 
 
 def parse_menu(data, hidden_cuisines):

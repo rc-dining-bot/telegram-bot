@@ -1,4 +1,4 @@
-from src.util.const import (
+from util.const import (
     BREAKFAST,
     DINNER
 )
@@ -20,8 +20,8 @@ def handle_menu(meal):
         if menu is None:  # if no menu, reply with no menu message
             context.bot.send_message(chat_id=update.effective_chat.id, text=no_menu_msg(meal))
         else:  # else reply user of the menu
-            menu = menu_msg(date.today(), meal, parse_menu(menu, hidden_cuisines))
+            menu = menu_msg(date.today(), meal, parse_menu(menu))
             # send formatted menu to client
-            context.bot.send_message(chat_id=update.effective_chat.id, text=menu, parse_mode='HTML')
+            update.message.reply_text(menu, parse_mode='HTML')
 
     return get_breakfast_or_dinner_menu
