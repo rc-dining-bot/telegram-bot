@@ -1,8 +1,8 @@
-from src.util.messages import settings_msg
-from src.util.kb_mark_up import settings_kb, hidden_cuisine_kb
-from src.util.util import parse_callback
-from database.database import get_hidden_cuisines, hide_cuisine
-from src.util.messages import no_hidden_cuisine_msg, hidden_cuisine_msg
+from util.messages import settings_msg
+from util.kb_mark_up import settings_kb, hidden_cuisine_kb
+from util.util import parse_callback
+from database.database import get_hidden_cuisines, update_hidden_cuisine
+from util.messages import no_hidden_cuisine_msg, hidden_cuisine_msg
 
 
 def handle_settings(update, context):
@@ -17,5 +17,5 @@ def handle_hidden_cuisine(update, context):
 
 def handle_hide_cuisine(update, context):
     cuisine_to_hide = parse_callback(update.callback_query.data)[1]
-    updated_hidden_cuisine = hide_cuisine(update.effective_chat.id, cuisine_to_hide)
+    updated_hidden_cuisine = update_hidden_cuisine(update.effective_chat.id, cuisine_to_hide)
     update.callback_query.edit_message_reply_markup(reply_markup=hidden_cuisine_kb(updated_hidden_cuisine))

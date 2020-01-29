@@ -4,7 +4,7 @@ from util.const import (
 )
 from util.messages import no_menu_msg, menu_msg
 from util.util import parse_menu
-from database.database import get_menu_from_db, get_hidden_cuisines
+from database.database import get_menu, get_hidden_cuisines
 from datetime import date
 
 
@@ -13,7 +13,7 @@ def handle_menu(meal):
 
     def get_breakfast_or_dinner_menu(update, context):
         # send the user menu
-        menu = get_menu_from_db(meal, date.today())
+        menu = get_menu(meal, date.today())
 
         hidden_cuisines = get_hidden_cuisines(update.effective_chat.id)
 
