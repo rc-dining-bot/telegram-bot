@@ -3,8 +3,8 @@ from util.const import (
     DINNER
 )
 from util.messages import no_menu_msg, menu_msg
-from util.util import parse_menu, get_hidden_cuisines
-from database.database import get_menu_from_db
+from util.util import parse_menu
+from database.database import get_menu_from_db, get_hidden_cuisines
 from datetime import date
 
 

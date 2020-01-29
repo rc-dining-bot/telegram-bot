@@ -4,7 +4,10 @@ import logging
 import sys
 
 # global singleton connection
-from database.queries import menu_query
+import psycopg2.extras
+
+from database.queries import menu_query, settings_query, settings_insert, settings_update
+from util.const import HIDE_CUISINE
 
 _connection = None
 
@@ -47,3 +50,34 @@ def get_menu_from_db(meal, date):
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(menu_query(meal), (date,))
     return cursor.fetchone()
+
+
+def get_hidden_cuisines(chat_id):
+    conn = connect()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute(settings_query(HIDE_CUISINE), (chat_id,))
+    data = cursor.fetchone()
+
+    if data is None:
+        # insert default settings
+        cursor.execute(settings_insert(), (chat_id, '{}', '{}'))
+        cursor.execute(settings_query(HIDE_CUISINE), (chat_id,))
+        data = cursor.fetchone()
+
+    return data[0]
+
+
+def hide_cuisine(chat_id, cuisine_to_hide):
+    hidden_cuisines = get_hidden_cuisines(chat_id)
+    if cuisine_to_hide in hidden_cuisines:
+        hidden_cuisines.remove(cuisine_to_hide)
+    else:
+        hidden_cuisines.append(cuisine_to_hide)
+    conn = connect()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute(settings_update(HIDE_CUISINE), (hidden_cuisines, chat_id))
+    conn.commit()
+    cursor.execute(settings_query(HIDE_CUISINE), (chat_id,))
+    data = cursor.fetchone()
+
+    return data[0]

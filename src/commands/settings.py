@@ -1,6 +1,7 @@
 from src.util.messages import settings_msg
 from src.util.kb_mark_up import settings_kb, hidden_cuisine_kb
-from src.util.util import get_hidden_cuisines, parse_callback, hide_cuisine
+from src.util.util import parse_callback
+from database.database import get_hidden_cuisines, hide_cuisine
 from src.util.messages import no_hidden_cuisine_msg, hidden_cuisine_msg
 
 
