@@ -61,8 +61,8 @@ def get_hidden_cuisines(chat_id):
     if data is None:
         # insert default settings
         cursor.execute(settings_insert(), (chat_id, '{}', '{}'))
-        cursor.execute(settings_query(HIDE_CUISINE), (chat_id,))
-        data = cursor.fetchone()
+        conn.commit()
+        return []  # return empty hidden food array
 
     return data[HIDE_CUISINE]  # returns hidden cuisines in user_pref
 
@@ -77,10 +77,10 @@ def update_hidden_cuisine(chat_id, cuisine_to_hide):
 
     # update database
     conn = connect()
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(settings_update(HIDE_CUISINE), (hidden_cuisines, chat_id))
     conn.commit()
     cursor.execute(settings_query(HIDE_CUISINE), (chat_id,))
     data = cursor.fetchone()
 
-    return data[0]
+    return data[HIDE_CUISINE]
