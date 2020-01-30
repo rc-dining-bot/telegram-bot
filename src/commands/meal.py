@@ -4,9 +4,7 @@ from util.const import (
 )
 from util.messages import no_menu_msg, menu_msg
 from util.util import parse_menu
-from database.database import connect
-from database.queries import menu_query
-import psycopg2.extras
+from database.database import get_menu, get_hidden_cuisines
 from datetime import date
 
 
@@ -14,17 +12,15 @@ def handle_menu(meal):
     assert meal == BREAKFAST or meal == DINNER, "Meal input is incorrect."
 
     def get_breakfast_or_dinner_menu(update, context):
-        """Send the user menu"""
-        # get menu from database
-        conn = connect()
-        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-        cur.execute(menu_query(meal), (date.today(),))
-        data = cur.fetchone()
+        # send the user menu
+        menu = get_menu(meal, date.today())
 
-        if data is None:  # if no menu, reply with no menu message
-            update.message.reply_text(no_menu_msg(meal))
+        hidden_cuisines = get_hidden_cuisines(update.effective_chat.id)
+
+        if menu is None:  # if no menu, reply with no menu message
+            context.bot.send_message(chat_id=update.effective_chat.id, text=no_menu_msg(meal))
         else:  # else reply user of the menu
-            menu = menu_msg(date.today(), meal, parse_menu(data))
+            menu = menu_msg(date.today(), meal, parse_menu(menu))
             # send formatted menu to client
             update.message.reply_text(menu, parse_mode='HTML')
 
