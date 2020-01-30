@@ -22,7 +22,7 @@ def hidden_cuisine_kb(hidden_cuisine):
             InlineKeyboardButton(('❌ ' if c in hidden_cuisine else '✅ ') + c, callback_data="menu." + c),
             cuisines))
     setting_button = InlineKeyboardButton("settings", callback_data="settings.home")
-    return InlineKeyboardMarkup(build_menu(kb_markup, n_cols=2, footer_buttons=setting_button))
+    return InlineKeyboardMarkup(build_menu(kb_markup, n_cols=2, footer_buttons=[setting_button]))
 
 
 def build_menu(buttons,
@@ -31,7 +31,7 @@ def build_menu(buttons,
                footer_buttons=None):
     menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
     if header_buttons:
-        menu.insert(0, [header_buttons])
+        menu.insert(0, header_buttons)
     if footer_buttons:
-        menu.append([footer_buttons])
+        menu.append(footer_buttons)
     return menu
