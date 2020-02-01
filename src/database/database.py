@@ -113,11 +113,13 @@ def get_favorite_foods(chat_id):
     return favorites  # returns favorites in user_pref
 
 
-def update_favorite_foods(chat_id, favorite_food):
+def update_favorite_foods(chat_id, favorite_food, is_add=True):
     favorites = get_favorite_foods(chat_id)
 
-    if favorite_food in favorites:
+    if favorite_food in favorites and is_add or favorite_food not in favorites and not is_add:
         return None
+    elif favorite_food in favorites and not is_add:
+        favorites.remove(favorite_food)
     else:
         favorites.append(favorite_food)
 

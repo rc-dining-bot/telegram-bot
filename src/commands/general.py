@@ -4,7 +4,7 @@ import logging
 
 def handle_start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text=welcome_msg(
-        update.message.chat.first_name))
+        update.effective_chat.first_name))
 
 
 def handle_help(update, context):

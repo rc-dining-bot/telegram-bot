@@ -1,4 +1,4 @@
-from util.const import COMMAND_LIST, ADD_FAVORITE_DESC
+from util.const import COMMAND_LIST, ADD_FAVORITE_DESC, ADD_FAVORITE_COMMAND
 
 
 # general messages
@@ -51,6 +51,10 @@ def add_favorite_already_exists_msg():
 
 def added_favorites_msg(favorites):
     return f'You have updated your favorites. {favorites_msg(favorites)}'
+
+
+def no_favorites_msg():
+    return f'You have no favorite foods! Use {ADD_FAVORITE_COMMAND} <food> to add one!'
 
 
 def menu_has_favorite_msg(favorite):

@@ -1,9 +1,11 @@
 from util.messages import settings_msg
-from util.kb_mark_up import settings_kb, hidden_cuisine_kb
+from util.kb_mark_up import settings_kb, hidden_cuisine_kb, favorites_kb
 from util.util import parse_callback
 from database.database import get_hidden_cuisines, update_hidden_cuisine, get_favorite_foods, update_favorite_foods
-from util.messages import no_hidden_cuisine_msg, hidden_cuisine_msg, add_favorite_no_input_msg, add_favorite_already_exists_msg, added_favorites_msg
+from util.messages import (no_hidden_cuisine_msg, hidden_cuisine_msg, add_favorite_no_input_msg,
+                           add_favorite_already_exists_msg, added_favorites_msg, no_favorites_msg, favorites_msg)
 from util.formatting import normalize
+import logging
 
 
 def handle_settings(update, context):
@@ -36,3 +38,28 @@ def handle_add_favorite(update, context):
         return
 
     update.message.reply_text(added_favorites_msg(favorites))
+
+
+def handle_remove_favorite(update, context):
+    favorites = get_favorite_foods(update.effective_chat.id)
+    if len(favorites) == 0:
+        update.message.reply_text(no_favorites_msg())
+        return
+
+    update.message.reply_text('Select your favorite food to remove:', reply_markup=favorites_kb(favorites))
+
+
+def handle_remove_favorite_callback(update, context):
+    food_to_remove = parse_callback(update.callback_query.data)[1]
+    favorites = update_favorite_foods(update.effective_chat.id, food_to_remove, False)
+
+    if favorites is None:
+        update.callback_query.edit_message_text('You already removed that!')
+        return
+
+    if len(favorites) == 0:
+        context.bot.edit_message_text(text=no_favorites_msg(), chat_id=update.effective_chat.id,
+                                      message_id=update.callback_query.message.message_id, reply_markup=favorites_kb(favorites))
+    else:
+        context.bot.edit_message_text(text=favorites_msg(favorites), chat_id=update.effective_chat.id,
+                                      message_id=update.callback_query.message.message_id, reply_markup=favorites_kb(favorites))
