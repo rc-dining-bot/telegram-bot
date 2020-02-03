@@ -9,6 +9,7 @@ FAVORITE = 'favorite'
 NOTIFICATION = 'notification'
 HOME = 'home'
 HIDE_CUISINE = 'hidden'
+BROADCAST_SUBSCRIPTION = 'subscribed'
 # menu messages
 BREAKFAST_COMMAND = f'/{BREAKFAST}'
 BREAKFAST_DESC = f'{BREAKFAST_COMMAND} - view today\'s breakfast menu\n'

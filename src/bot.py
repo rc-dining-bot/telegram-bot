@@ -3,6 +3,16 @@ import os
 
 from dotenv import load_dotenv
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
+
+from commands.general import (
+    handle_start,
+    handle_help,
+    handle_error
+)
+from commands.meal import handle_menu
+from commands.settings import handle_settings, handle_hidden_cuisine, handle_hide_cuisine
+from database.database import connect
+from scheduler.scheduler import scheduler
 from util.const import (
     START,
     HELP,
@@ -11,14 +21,6 @@ from util.const import (
     SETTINGS,
     HIDE_CUISINE
 )
-from commands.meal import handle_menu
-from commands.general import (
-    handle_start,
-    handle_help,
-    handle_error
-)
-from commands.settings import handle_settings, handle_hidden_cuisine, handle_hide_cuisine
-from database.database import connect
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -51,8 +53,11 @@ def main():
     # log all errors
     dispatcher.add_error_handler(handle_error)
 
-    # Start the Bot
+    # start the Bot
     updater.start_polling()
+
+    # start the scheduler which broadcasts the menus
+    scheduler(dispatcher.bot)
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since

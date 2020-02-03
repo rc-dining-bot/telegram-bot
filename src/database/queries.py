@@ -16,6 +16,14 @@ def settings_query(setting):
     )
 
 
+def settings_broadcast_subscribers_query(meal):
+    return sql.SQL("SELECT {column} FROM {table} WHERE {condition} = %s;").format(
+        column=sql.Identifier('chat_id'),
+        table=sql.Identifier('user_pref'),
+        condition=sql.Identifier(meal + '_subscribed')
+    )
+
+
 def settings_insert():
     # takes in 3 values:
     # chat_id
