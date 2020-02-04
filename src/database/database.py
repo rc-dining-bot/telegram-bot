@@ -6,7 +6,7 @@ import sys
 import psycopg2.extras
 
 from database.queries import menu_query, settings_query, settings_insert, settings_update
-from util.const import HIDE_CUISINE
+from util.const import HIDE_CUISINE, FAVORITES
 
 # global connection
 _connection = None
@@ -49,7 +49,17 @@ def get_menu(meal, date):
     conn = connect()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(menu_query(meal), (date,))
-    return cursor.fetchone()
+    menu = cursor.fetchone()
+    cursor.close()
+    return menu
+
+
+def insert_default_user_pref(chat_id):
+    conn = connect()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cursor.execute(settings_insert(), (chat_id, '{}', '{}'))
+    conn.commit()
+    cursor.close()
 
 
 def get_hidden_cuisines(chat_id):
@@ -60,11 +70,13 @@ def get_hidden_cuisines(chat_id):
 
     if data is None:
         # insert default settings
-        cursor.execute(settings_insert(), (chat_id, '{}', '{}'))
-        conn.commit()
-        return []  # return empty hidden food array
+        insert_default_user_pref(chat_id)
+        hidden = []
+    else:
+        hidden = data[HIDE_CUISINE]
 
-    return data[HIDE_CUISINE]  # returns hidden cuisines in user_pref
+    cursor.close()
+    return hidden  # returns hidden cuisines in user_pref
 
 
 def update_hidden_cuisine(chat_id, cuisine_to_hide):
@@ -80,7 +92,41 @@ def update_hidden_cuisine(chat_id, cuisine_to_hide):
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(settings_update(HIDE_CUISINE), (hidden_cuisines, chat_id))
     conn.commit()
-    cursor.execute(settings_query(HIDE_CUISINE), (chat_id,))
+    cursor.close()
+
+    return hidden_cuisines
+
+
+def get_favorite_foods(chat_id):
+    conn = connect()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cursor.execute(settings_query(FAVORITES), (chat_id,))
     data = cursor.fetchone()
 
-    return data[HIDE_CUISINE]
+    if data is None:
+        insert_default_user_pref(chat_id)
+        favorites = []
+    else:
+        favorites = data[FAVORITES]
+
+    cursor.close()
+    return favorites  # returns favorites in user_pref
+
+
+def update_favorite_foods(chat_id, favorite_food, is_add=True):
+    favorites = get_favorite_foods(chat_id)
+
+    if favorite_food in favorites and is_add or favorite_food not in favorites and not is_add:
+        return None
+    elif favorite_food in favorites and not is_add:
+        favorites.remove(favorite_food)
+    else:
+        favorites.append(favorite_food)
+
+    conn = connect()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cursor.execute(settings_update(FAVORITES), (favorites, chat_id))
+    conn.commit()
+    cursor.close()
+
+    return favorites

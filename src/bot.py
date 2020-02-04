@@ -9,7 +9,9 @@ from util.const import (
     BREAKFAST,
     DINNER,
     SETTINGS,
-    HIDE_CUISINE
+    HIDE_CUISINE,
+    ADD_FAVORITE,
+    REMOVE_FAVORITE
 )
 from commands.meal import handle_menu
 from commands.general import (
@@ -17,7 +19,8 @@ from commands.general import (
     handle_help,
     handle_error
 )
-from commands.settings import handle_settings, handle_hidden_cuisine, handle_hide_cuisine
+from commands.settings import (handle_settings, handle_hidden_cuisine, handle_hide_cuisine,
+                               handle_add_favorite, handle_remove_favorite, handle_remove_favorite_callback)
 from database.database import connect
 
 # Enable logging
@@ -41,12 +44,15 @@ def main():
     dispatcher.add_handler(CommandHandler(DINNER, handle_menu(meal=DINNER)))
     dispatcher.add_handler(CommandHandler(SETTINGS, handle_settings))
     dispatcher.add_handler(CommandHandler(HIDE_CUISINE, handle_hidden_cuisine))
+    dispatcher.add_handler(CommandHandler(ADD_FAVORITE, handle_add_favorite))
+    dispatcher.add_handler(CommandHandler(REMOVE_FAVORITE, handle_remove_favorite))
 
     # add callback_query handler
     dispatcher.add_handler(CallbackQueryHandler(handle_start, pattern='^start.+'))
     dispatcher.add_handler(CallbackQueryHandler(handle_settings, pattern='^settings.home'))
     dispatcher.add_handler(CallbackQueryHandler(handle_hidden_cuisine, pattern='^settings.hidden'))
     dispatcher.add_handler(CallbackQueryHandler(handle_hide_cuisine, pattern='^menu.+'))
+    dispatcher.add_handler(CallbackQueryHandler(handle_remove_favorite_callback, pattern='^favorites.+'))
 
     # log all errors
     dispatcher.add_error_handler(handle_error)

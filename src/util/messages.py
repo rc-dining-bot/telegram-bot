@@ -1,4 +1,4 @@
-from util.const import COMMAND_LIST
+from util.const import COMMAND_LIST, ADD_FAVORITE_DESC, ADD_FAVORITE_COMMAND
 
 
 # general messages
@@ -38,11 +38,23 @@ def hidden_cuisine_msg(name):
 
 
 def favorites_msg(favorites):
-    return f'These are your current favorites:\n{favorites}'
+    return f"These are your current favorites:\n{', '.join(favorites)}"
+
+
+def add_favorite_no_input_msg():
+    return f'You did not indicate a favorite food!\n{ADD_FAVORITE_DESC}'
+
+
+def add_favorite_already_exists_msg():
+    return 'You already favorited this food!'
 
 
 def added_favorites_msg(favorites):
     return f'You have updated your favorites. {favorites_msg(favorites)}'
+
+
+def no_favorites_msg():
+    return f'You have no favorite foods! Use {ADD_FAVORITE_COMMAND} <food> to add one!'
 
 
 def menu_has_favorite_msg(favorite):
