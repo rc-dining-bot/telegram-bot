@@ -1,4 +1,4 @@
-from util.formatting import bold, italicize
+from util.formatting import bold, italicize, normalize
 
 
 def parse_menu(data, hidden_cuisines):
@@ -6,7 +6,7 @@ def parse_menu(data, hidden_cuisines):
     for key in data.keys():
         if key == 'date' or key in hidden_cuisines:
             continue
-        menu += bold(key.capitalize()) + '\n'
+        menu += bold(normalize(key)) + '\n'
         for item in data[key]:
             if item == 'OR':
                 menu += italicize(item) + '\n'

@@ -12,7 +12,7 @@ HIDE_CUISINE = 'hidden'
 # menu messages
 BREAKFAST_COMMAND = f'/{BREAKFAST}'
 BREAKFAST_DESC = f'{BREAKFAST_COMMAND} - view today\'s breakfast menu\n'
-DINNER_COMMAND = f'DINNER'
+DINNER_COMMAND = f'/{DINNER}'
 DINNER_DESC = f'{DINNER_COMMAND} - view today\'s dinner menu\n'
 # setting messages
 SETTINGS_COMMAND = f'/{SETTINGS}'
