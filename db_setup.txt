@@ -1,0 +1,3 @@
+CREATE TABLE breakfast (date DATE PRIMARY KEY, self_service TEXT [], western TEXT [], dim_sum_congee_noodle TEXT [], asian TEXT [], asian_vegetarian TEXT [], malay TEXT [], halal_vegetarian TEXT [], grab_and_go TEXT[])
+CREATE TABLE dinner (date DATE PRIMARY KEY, self_service TEXT [],western TEXT [], noodle TEXT [], asian TEXT [], vegetarian TEXT [], malay TEXT [], soup TEXT [], indian TEXT[])
+CREATE TABLE user_pref (chat_id BIGINT PRIMARY KEY, favorites TEXT [], hidden TEXT [])
