@@ -4,6 +4,7 @@ from util.const import (
 )
 from util.messages import no_menu_msg, menu_msg, failed_to_parse_date_msg
 from util.util import parse_menu
+from util.kb_mark_up import start_button_kb
 from database.database import get_menu, get_hidden_cuisines
 from datetime import date
 from dateparser import parse
@@ -18,21 +19,24 @@ def handle_menu(meal):
         parsed_date = get_menu_query_date(entered_date)
 
         if parsed_date is None:
-            update.message.reply_text(failed_to_parse_date_msg(entered_date))
+            update.message.reply_text(text=failed_to_parse_date_msg(entered_date))
             return
 
         menu = get_menu(meal, parsed_date)
         hidden_cuisines = get_hidden_cuisines(update.effective_chat.id)
 
         if menu is None:  # if no menu, reply with no menu message
-            context.bot.send_message(chat_id=update.effective_chat.id, text=no_menu_msg(meal))
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text=no_menu_msg(meal),
+                                     reply_markup=start_button_kb())
         else:  # else reply user of the menu
             menu = menu_msg(parsed_date, meal, parse_menu(menu, hidden_cuisines))
             # send formatted menu to client
-            update.message.reply_text(menu, parse_mode='HTML')
+            update.message.reply_text(text=menu,
+                                      parse_mode='HTML')
 
     def get_menu_query_date(entered_date):
-        if (entered_date == ''):
+        if entered_date == '':
             return date.today()
 
         parsed_date = parse(entered_date)
