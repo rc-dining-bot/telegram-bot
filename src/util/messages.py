@@ -17,7 +17,7 @@ def no_menu_msg(meal):
 
 
 def menu_msg(date, meal, menu):
-    return f'{meal} - {date}\n\n{menu}'
+    return f'{meal.capitalize()} - {date.strftime("%A, %d %b %Y")}\n\n{menu}'
 
 
 def failed_to_parse_date_msg(entered_date):

@@ -57,7 +57,17 @@ def get_raw_menu(meal, date):
     conn = connect()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(menu_query(meal), (date,))
-    return cursor.fetchone()
+    menu = cursor.fetchone()
+    cursor.close()
+    return menu
+
+
+def insert_default_user_pref(chat_id):
+    conn = connect()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cursor.execute(settings_insert(), (chat_id, '{}', '{}'))
+    conn.commit()
+    cursor.close()
 
 
 def get_hidden_cuisines(chat_id):
@@ -69,11 +79,13 @@ def get_hidden_cuisines(chat_id):
 
     if data is None:
         # insert default settings
-        cursor.execute(settings_insert(), (chat_id, '{}', '{}'))
-        conn.commit()
-        return []  # return empty hidden food array
+        insert_default_user_pref(chat_id)
+        hidden = []
+    else:
+        hidden = data[HIDE_CUISINE]
 
-    return data[HIDE_CUISINE]  # returns hidden cuisines in user_pref
+    cursor.close()
+    return hidden  # returns hidden cuisines in user_pref
 
 
 def get_broadcast_subscribers(meal):
@@ -100,7 +112,6 @@ def update_hidden_cuisine(chat_id, cuisine_to_hide):
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(settings_update(HIDE_CUISINE), (hidden_cuisines, chat_id))
     conn.commit()
-    cursor.execute(settings_query(HIDE_CUISINE), (chat_id,))
-    data = cursor.fetchone()
+    cursor.close()
 
-    return data[HIDE_CUISINE]
+    return hidden_cuisines
