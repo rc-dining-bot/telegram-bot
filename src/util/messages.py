@@ -30,7 +30,7 @@ def settings_msg():
 
 
 def no_hidden_cuisine_msg():
-    return '<b>You do not have any hidden cuisine.</b>'
+    return '<b>You do not have any hidden cuisines.</b>'
 
 
 def hidden_cuisine_msg(name):

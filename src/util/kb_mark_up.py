@@ -44,7 +44,7 @@ def build_menu(buttons,
     # builds the menu with:
     # array of buttons
     # number of rows
-    # (optionally) header/footer buttons
+    # (optionally) array of header/footer buttons
     menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
     if header_buttons:
         menu.insert(0, header_buttons)

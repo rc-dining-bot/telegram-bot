@@ -26,25 +26,16 @@ REMOVE_FAVORITE_DESC = f'{REMOVE_FAVORITE_COMMAND} - remove favorite food from n
 NO_FAVORITES_MSG = f'You have no favorite foods! Use {ADD_FAVORITE_COMMAND} [FOOD] to add one!'
 HELP_COMMAND = '/help'
 HELP_DESC = f'{HELP_COMMAND} - show the help message\n'
-SET_BREAKFAST_NOTIFICATION_COMMAND = '/set_breakfast_time'
-SET_BREAKFAST_NOTIFICATION_DESC = f'{SET_BREAKFAST_NOTIFICATION_COMMAND} - set breakfast notification time (HH:MM). ' \
-                                  f'<i>Notifications after 09:30 will be for the next day\'s breakfast</i>\n '
-SET_DINNER_NOTIFICATION_COMMAND = '/set_dinner_time'
-SET_DINNER_NOTIFICATION_DESC = f'{SET_DINNER_NOTIFICATION_COMMAND} - set dinner notification time (HH:MM). ' \
-                               f'<i>Notifications after 21:30 will be for the next day\'s dinner</i>\n '
 
 COMMAND_LIST = \
     f'{BREAKFAST_DESC}' \
     f'{DINNER_DESC}' \
     f'{ADD_FAVORITE_DESC}' \
     f'{REMOVE_FAVORITE_DESC}' \
-    f'{SET_BREAKFAST_NOTIFICATION_DESC}' \
-    f'{SET_DINNER_NOTIFICATION_DESC}' \
     f'{SETTINGS_DESC}' \
     f'{HELP_DESC}' \
     f'\n' \
     f'<b>NOTE:</b> {BREAKFAST_COMMAND} (or {DINNER_COMMAND}) [DAY] - view the breakfast/dinner menu ' \
     f'for a particular day\n' \
     '<i>e.g. /breakfast tomorrow, /breakfast saturday, /dinner next tuesday</i>\n\n' \
-    # 'Give feedback for the bot at https://github.com/rc-dining-bot/telegram-bot'
-    # the line above generates a preview window which would likely reduce the user experience
+    'Give feedback for the bot at https://github.com/rc-dining-bot/telegram-bot'
