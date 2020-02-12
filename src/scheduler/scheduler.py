@@ -1,6 +1,6 @@
+import os
 from datetime import date
-
-import schedule
+import logging
 
 from database.database import (
     get_broadcast_subscribers,
@@ -13,36 +13,40 @@ from util.messages import menu_msg
 from util.util import parse_menu
 
 
-def scheduler(bot):
-    breakfast_subscribers = get_broadcast_subscribers(BREAKFAST)
-    dinner_subscribers = get_broadcast_subscribers(DINNER)
+def scheduler(job_queue):
+    # set timezone to Singapore for AWS instance
+    os.environ['TZ'] = 'Singapore'
 
     # schedule breakfast and dinner broadcasts
-    schedule.every().day\
-        .at(BREAKFAST_BROADCAST_TIME)\
-        .do(broadcast(BREAKFAST, bot, breakfast_subscribers))
-    schedule.every().day\
-        .at(DINNER_BROADCAST_TIME)\
-        .do(broadcast(DINNER, bot, dinner_subscribers))
+
+    job_queue.run_daily(callback=meal_broadcast(BREAKFAST),
+                        time=BREAKFAST_BROADCAST_TIME)
+    job_queue.run_daily(callback=meal_broadcast(DINNER),
+                        time=DINNER_BROADCAST_TIME)
 
 
-def broadcast(meal, bot, subscribers):
-    menu = get_raw_menu(meal, date.today())
+# meal broadcast function
+def meal_broadcast(meal):
+    def send_menu(context):
+        # get menu today
+        menu = get_raw_menu(meal, date.today())
 
-    if menu is None:
-        return do_nothing
+        if menu is None:
+            return
 
-    def send_menu():
+        # get the subscribers before the broadcast
+        subscribers = get_broadcast_subscribers(meal)
+
+        logging.info("meal broadcast in progress")
+
         for user_id in subscribers:
-            hidden_cuisines = get_hidden_cuisines(user_id)
-            bot.send_message(user_id,
-                             menu_msg(date.today(),
-                                      meal,
-                                      parse_menu(menu, hidden_cuisines)),
-                             parse_mode='HTML')
+            chat_id = user_id[0]  # extracts chat_id from nested [] from database
+            hidden_cuisines = get_hidden_cuisines(chat_id)
+            context.bot.send_message(chat_id,
+                                     menu_msg(date.today(),
+                                              meal,
+                                              parse_menu(menu, hidden_cuisines)),
+                                     parse_mode='HTML')
 
+        logging.info("meal broadcast finished")
     return send_menu
-
-
-def do_nothing():
-    return

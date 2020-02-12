@@ -1,3 +1,4 @@
+from datetime import datetime, date, time, timedelta
 from util.formatting import bold, italicize
 
 
@@ -19,3 +20,7 @@ def parse_menu(data, hidden_cuisines):
 def parse_callback(data):
     split_data = data.split('.', 1)
     return split_data[0], split_data[1]
+
+
+def localize_time(hour, minute, second):
+    return (datetime.combine(date.today(), time(hour=hour, minute=minute, second=second)) + timedelta(hours=-8)).time()

@@ -12,7 +12,7 @@ python-telegram-bot = "*"
 psycopg2 = "*"
 python-dotenv = "*"
 schedule = "*"
-telegram = "*"
+pytz = "*"
 
 [requires]
 python_version = "3.6"

@@ -81,7 +81,7 @@ def get_broadcast_subscribers(meal):
     conn = connect()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute(settings_broadcast_subscribers_query(meal), ('true',))
-    data = cursor.fetchone()
+    data = cursor.fetchall()
 
     return data
 

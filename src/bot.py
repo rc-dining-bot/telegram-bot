@@ -57,7 +57,7 @@ def main():
     updater.start_polling()
 
     # start the scheduler which broadcasts the menus
-    scheduler(dispatcher.bot)
+    scheduler(updater.job_queue)
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
