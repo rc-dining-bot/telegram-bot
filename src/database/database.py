@@ -142,6 +142,7 @@ def update_subscribe_setting(chat_id, meal):
     subscribed = cursor.fetchone()[meal + BROADCAST_SUBSCRIPTION]
     subscribed = not subscribed
     cursor.execute(settings_update(field), (subscribed, chat_id))
+    conn.commit()
     cursor.close()
 
     return subscribed

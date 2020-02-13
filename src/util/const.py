@@ -37,9 +37,9 @@ SET_DINNER_NOTIFICATION_DESC = f'{SET_DINNER_NOTIFICATION_COMMAND} - subscribe t
 COMMAND_LIST = \
     f'{BREAKFAST_DESC}' \
     f'{DINNER_DESC}' \
-    f'{ADD_FAVORITE_DESC}' \
-    f'{REMOVE_FAVORITE_DESC}' \
     f'{SETTINGS_DESC}' \
+    f'{SET_BREAKFAST_NOTIFICATION_DESC}' \
+    f'{SET_DINNER_NOTIFICATION_DESC}' \
     f'{HELP_DESC}' \
     f'\n' \
     f'<b>NOTE:</b> {BREAKFAST_COMMAND} (or {DINNER_COMMAND}) [DAY] - view the breakfast/dinner menu ' \
