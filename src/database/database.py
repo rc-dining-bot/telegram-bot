@@ -21,7 +21,7 @@ from util.const import (
 _connection = None
 
 
-def connect():
+def connect_database():
     """ Connect to the PostgreSQL database server"""
     global _connection
     # if connection is already formed, return connection
@@ -55,7 +55,7 @@ def connect():
 
 def get_raw_menu(meal, date):
     # get menu from database
-    conn = connect()
+    conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(menu_query(meal), (date,))
     menu = cursor.fetchone()
@@ -64,7 +64,7 @@ def get_raw_menu(meal, date):
 
 
 def insert_default_user_pref(chat_id):
-    conn = connect()
+    conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(settings_insert(), (chat_id, '{}', '{}'))
     conn.commit()
@@ -72,6 +72,7 @@ def insert_default_user_pref(chat_id):
 
 
 def get_hidden_cuisines(chat_id):
+    conn = connect_database()
     # get hidden cuisines of a user from database
     conn = connect()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
@@ -91,7 +92,7 @@ def get_hidden_cuisines(chat_id):
 
 def get_broadcast_subscribers(meal):
     # get broadcast subscribers from database based on meal
-    conn = connect()
+    conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute(settings_broadcast_subscribers_query(meal), ('true',))
     data = cursor.fetchall()
@@ -101,7 +102,7 @@ def get_broadcast_subscribers(meal):
 
 def get_subscribe_setting(meal, chat_id):
     # get user's subscribe setting from database based on meal
-    conn = connect()
+    conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute(settings_query(meal + BROADCAST_SUBSCRIPTION), (chat_id,))
     [data] = cursor.fetchone()
@@ -119,7 +120,7 @@ def update_hidden_cuisine(chat_id, cuisine_to_hide):
         hidden_cuisines.append(cuisine_to_hide)
 
     # update database
-    conn = connect()
+    conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(settings_update(HIDE_CUISINE), (hidden_cuisines, chat_id))
     conn.commit()

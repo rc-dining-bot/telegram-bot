@@ -2,6 +2,8 @@ from psycopg2 import sql
 
 
 def menu_query(meal):
+    # takes in 1 value:
+    # date
     return sql.SQL("SELECT * FROM {table} WHERE {pkey} = %s;").format(
         table=sql.Identifier(meal),
         pkey=sql.Identifier('date')
@@ -9,6 +11,9 @@ def menu_query(meal):
 
 
 def settings_query(setting):
+    # takes in 2 values:
+    # user pref setting type;
+    # chat_id
     return sql.SQL("SELECT {setting} FROM {table} WHERE {pkey} = %s;").format(
         setting=sql.Identifier(setting),
         table=sql.Identifier('user_pref'),

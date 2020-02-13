@@ -19,19 +19,30 @@ from util.messages import (
 )
 
 
+# settings menu
 def handle_settings(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=settings_msg(), reply_markup=settings_kb())
+    context.bot.send_message(chat_id=update.effective_chat.id,
+                             text=settings_msg(),
+                             reply_markup=settings_kb(),
+                             parse_mode=telegram.ParseMode.HTML)
 
 
+# hidden cuisine panel
 def handle_hidden_cuisine(update, context):
     hidden_cuisine = get_hidden_cuisines(update.effective_chat.id)
     msg = no_hidden_cuisine_msg() if not hidden_cuisine else hidden_cuisine_msg(update.effective_chat.first_name)
-    context.bot.send_message(chat_id=update.effective_chat.id, text=msg, reply_markup=hidden_cuisine_kb(hidden_cuisine))
+
+    context.bot.send_message(chat_id=update.effective_chat.id,
+                             text=msg,
+                             reply_markup=hidden_cuisine_kb(hidden_cuisine),
+                             parse_mode=telegram.ParseMode.HTML)
 
 
+# update keyboard markup after updating hide cuisine panel
 def handle_hide_cuisine(update, context):
     cuisine_to_hide = parse_callback(update.callback_query.data)[1]
     updated_hidden_cuisine = update_hidden_cuisine(update.effective_chat.id, cuisine_to_hide)
+
     update.callback_query.edit_message_reply_markup(reply_markup=hidden_cuisine_kb(updated_hidden_cuisine))
 
 
