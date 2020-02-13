@@ -12,6 +12,7 @@ HIDE_CUISINE = 'hidden'
 SET_BREAKFAST_NOTIFICATION = 'subscribe_breakfast'
 SET_DINNER_NOTIFICATION = 'subscribe_dinner'
 BROADCAST_SUBSCRIPTION = '_subscribed'
+RV_COUNT = 'rvcount'
 
 # start messages
 START_COMMAND = f'/{START}'
@@ -39,6 +40,8 @@ SET_BREAKFAST_NOTIFICATION_DESC = f'{SET_BREAKFAST_NOTIFICATION_COMMAND} ' \
 SET_DINNER_NOTIFICATION_COMMAND = '/subscribe_dinner'
 SET_DINNER_NOTIFICATION_DESC = f'{SET_DINNER_NOTIFICATION_COMMAND} ' \
                                f'- subscribe to dinner broadcast at <b>3PM</b> daily.\n'
+RV_COUNT_COMMAND = f'/{RV_COUNT}'
+RV_COUNT_DESC = f'{RV_COUNT_COMMAND} - get the number of people in RVRC Dining Hall now\n'
 
 COMMAND_LIST = \
     f'{START_DESC}' \

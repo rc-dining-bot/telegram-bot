@@ -12,6 +12,7 @@ python-telegram-bot = "*"
 psycopg2 = "*"
 python-dotenv = "*"
 dateparser = "*"
+requests = "*"
 
 [requires]
 python_version = "3.6"

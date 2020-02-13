@@ -15,7 +15,9 @@ from commands.settings import (
     handle_hidden_cuisine,
     handle_hide_cuisine,
     handle_subscribe,
-    handle_notification)
+    handle_notification
+)
+from commands.others import handle_rv_count
 from database.database import connect_database
 from scheduler.scheduler import scheduler
 from util.const import (
@@ -26,7 +28,8 @@ from util.const import (
     SETTINGS,
     HIDE_CUISINE,
     SET_BREAKFAST_NOTIFICATION,
-    SET_DINNER_NOTIFICATION
+    SET_DINNER_NOTIFICATION,
+    RV_COUNT
 )
 
 # Enable logging
@@ -52,6 +55,7 @@ def main():
     dispatcher.add_handler(CommandHandler(HIDE_CUISINE, handle_hidden_cuisine))
     dispatcher.add_handler(CommandHandler(SET_BREAKFAST_NOTIFICATION, handle_subscribe(meal=BREAKFAST)))
     dispatcher.add_handler(CommandHandler(SET_DINNER_NOTIFICATION, handle_subscribe(meal=DINNER)))
+    dispatcher.add_handler(CommandHandler(RV_COUNT, handle_rv_count))
 
     # add callback_query handler
     dispatcher.add_handler(CallbackQueryHandler(handle_start, pattern='^start.home'))
