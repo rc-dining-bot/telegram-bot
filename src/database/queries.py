@@ -36,7 +36,7 @@ def settings_insert():
 
 def settings_update(setting):
     # takes in 2 values:
-    # updated hidden cuisines table;
+    # updated setting entry;
     # chat_id
     return sql.SQL("UPDATE {table} SET {setting} = %s WHERE {pkey} = %s;").format(
         table=sql.Identifier('user_pref'),

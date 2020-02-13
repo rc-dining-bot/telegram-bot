@@ -1,8 +1,22 @@
-from util.messages import settings_msg
-from util.kb_mark_up import settings_kb, hidden_cuisine_kb
+import telegram
+
+from util.const import (
+    BREAKFAST,
+    DINNER
+)
+from util.messages import settings_msg, notification_view_msg
+from util.kb_mark_up import settings_kb, hidden_cuisine_kb, notification_kb
 from util.util import parse_callback
-from database.database import get_hidden_cuisines, update_hidden_cuisine
-from util.messages import no_hidden_cuisine_msg, hidden_cuisine_msg
+from database.database import (
+    get_hidden_cuisines,
+    get_subscribe_setting,
+    update_hidden_cuisine,
+    update_subscribe_setting
+)
+from util.messages import (
+    no_hidden_cuisine_msg,
+    hidden_cuisine_msg,
+)
 
 
 def handle_settings(update, context):
@@ -19,3 +33,23 @@ def handle_hide_cuisine(update, context):
     cuisine_to_hide = parse_callback(update.callback_query.data)[1]
     updated_hidden_cuisine = update_hidden_cuisine(update.effective_chat.id, cuisine_to_hide)
     update.callback_query.edit_message_reply_markup(reply_markup=hidden_cuisine_kb(updated_hidden_cuisine))
+
+
+def handle_notification(update, context):
+    chat_id = update.effective_chat.id
+    bf_sub = get_subscribe_setting(BREAKFAST, chat_id)
+    dn_sub = get_subscribe_setting(DINNER, chat_id)
+    context.bot.send_message(chat_id=chat_id,
+                             text=notification_view_msg(),
+                             reply_markup=notification_kb(bf_sub=bf_sub, dn_sub=dn_sub))
+
+
+def handle_subscribe(meal):
+    assert meal == BREAKFAST or meal == DINNER, "Meal input is incorrect."
+
+    def toggle_subscribe(update, context):
+        chat_id = update.effective_chat.id
+        update_subscribe_setting(chat_id=chat_id, meal=meal)
+        handle_notification(update, context)
+
+    return toggle_subscribe

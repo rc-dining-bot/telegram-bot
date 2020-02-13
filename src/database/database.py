@@ -14,6 +14,7 @@ from database.queries import (
 )
 from util.const import (
     HIDE_CUISINE,
+    BROADCAST_SUBSCRIPTION
 )
 
 # global connection
@@ -98,6 +99,16 @@ def get_broadcast_subscribers(meal):
     return data
 
 
+def get_subscribe_setting(meal, chat_id):
+    # get user's subscribe setting from database based on meal
+    conn = connect()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute(settings_query(meal + BROADCAST_SUBSCRIPTION), (chat_id,))
+    [data] = cursor.fetchone()
+
+    return data
+
+
 def update_hidden_cuisine(chat_id, cuisine_to_hide):
     # updates hidden cuisine of a user
     hidden_cuisines = get_hidden_cuisines(chat_id)
@@ -115,3 +126,17 @@ def update_hidden_cuisine(chat_id, cuisine_to_hide):
     cursor.close()
 
     return hidden_cuisines
+
+
+def update_subscribe_setting(chat_id, meal):
+    # update database
+    conn = connect()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    field = meal + BROADCAST_SUBSCRIPTION
+    cursor.execute(settings_query(field), (chat_id,))
+    [subscribed] = cursor.fetchone()
+    subscribed = not subscribed
+    cursor.execute(settings_update(field), (subscribed, chat_id))
+    cursor.close()
+
+    return subscribed

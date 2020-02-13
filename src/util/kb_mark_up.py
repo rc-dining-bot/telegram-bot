@@ -1,5 +1,7 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
+setting_button = InlineKeyboardButton("settings", callback_data="settings.home")
+
 
 def settings_kb():
     button_list = [
@@ -18,11 +20,19 @@ def hidden_cuisine_kb(hidden_cuisine):
         "noodle", "vegetarian", "soup", "indian",
     ]
     kb_markup = list(
-        map(lambda c:
-            InlineKeyboardButton(('❌ ' if c in hidden_cuisine else '✅ ') + c, callback_data="menu." + c),
+        map(lambda c: InlineKeyboardButton(('❌ ' if c in hidden_cuisine else '✅ ') + c, callback_data="menu." + c),
             cuisines))
-    setting_button = InlineKeyboardButton("settings", callback_data="settings.home")
     return InlineKeyboardMarkup(build_menu(kb_markup, n_cols=2, footer_buttons=[setting_button]))
+
+
+def notification_kb(bf_sub, dn_sub):
+    kb_markup = [
+        InlineKeyboardButton(('✅ ' if bf_sub else '❌ ') + "Breakfast notification",
+                             callback_data="settings.breakfast_subscribe"),
+        InlineKeyboardButton(('✅ ' if dn_sub else '❌ ') + "Dinner notification",
+                             callback_data="settings.dinner_subscribe")
+    ]
+    return InlineKeyboardMarkup(build_menu(kb_markup, n_cols=1, footer_buttons=[setting_button]))
 
 
 def build_menu(buttons,

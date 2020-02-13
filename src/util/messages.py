@@ -47,3 +47,7 @@ def added_favorites_msg(favorites):
 
 def menu_has_favorite_msg(favorite):
     return f'Hey! This meal contains {favorite}'
+
+
+def notification_view_msg():
+    return f'You have subscribed to the following meal broadcast:'

@@ -10,7 +10,12 @@ from commands.general import (
     handle_error
 )
 from commands.meal import handle_menu
-from commands.settings import handle_settings, handle_hidden_cuisine, handle_hide_cuisine
+from commands.settings import (
+    handle_settings,
+    handle_hidden_cuisine,
+    handle_hide_cuisine,
+    handle_subscribe,
+    handle_notification)
 from database.database import connect
 from scheduler.scheduler import scheduler
 from util.const import (
@@ -19,7 +24,9 @@ from util.const import (
     BREAKFAST,
     DINNER,
     SETTINGS,
-    HIDE_CUISINE
+    HIDE_CUISINE,
+    SET_BREAKFAST_NOTIFICATION,
+    SET_DINNER_NOTIFICATION
 )
 
 # Enable logging
@@ -43,11 +50,17 @@ def main():
     dispatcher.add_handler(CommandHandler(DINNER, handle_menu(meal=DINNER)))
     dispatcher.add_handler(CommandHandler(SETTINGS, handle_settings))
     dispatcher.add_handler(CommandHandler(HIDE_CUISINE, handle_hidden_cuisine))
+    dispatcher.add_handler(CommandHandler(HIDE_CUISINE, handle_hidden_cuisine))
+    dispatcher.add_handler(CommandHandler(SET_BREAKFAST_NOTIFICATION, handle_subscribe(meal=BREAKFAST)))
+    dispatcher.add_handler(CommandHandler(SET_DINNER_NOTIFICATION, handle_subscribe(meal=DINNER)))
 
     # add callback_query handler
     dispatcher.add_handler(CallbackQueryHandler(handle_start, pattern='^start.+'))
     dispatcher.add_handler(CallbackQueryHandler(handle_settings, pattern='^settings.home'))
     dispatcher.add_handler(CallbackQueryHandler(handle_hidden_cuisine, pattern='^settings.hidden'))
+    dispatcher.add_handler(CallbackQueryHandler(handle_notification, pattern='^settings.notification'))
+    dispatcher.add_handler(CallbackQueryHandler(handle_subscribe(BREAKFAST), pattern='^settings.breakfast_subscribe'))
+    dispatcher.add_handler(CallbackQueryHandler(handle_subscribe(DINNER), pattern='^settings.dinner_subscribe'))
     dispatcher.add_handler(CallbackQueryHandler(handle_hide_cuisine, pattern='^menu.+'))
 
     # log all errors
