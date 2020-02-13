@@ -1,3 +1,5 @@
+import telegram
+
 from util.const import (
     BREAKFAST,
     DINNER
@@ -14,27 +16,32 @@ def handle_menu(meal):
     assert meal == BREAKFAST or meal == DINNER, "Meal input is incorrect."
 
     def get_breakfast_or_dinner_menu(update, context):
+        chat_id = update.effective_chat.id
         # send the user menu
-        entered_date = ' '.join(context.args)
+        entered_date = ''
+        if update.callback_query is None:
+            entered_date = ' '.join(context.args)
         parsed_date = get_menu_query_date(entered_date)
 
         if parsed_date is None:
-            update.message.reply_text(text=failed_to_parse_date_msg(entered_date))
+            context.bot.send_message(chat_id=chat_id,
+                                     text=failed_to_parse_date_msg(entered_date))
             return
 
         menu = get_raw_menu(meal, parsed_date)
         hidden_cuisines = get_hidden_cuisines(update.effective_chat.id)
 
         if menu is None:  # if no menu, reply with no menu message
-            context.bot.send_message(chat_id=update.effective_chat.id,
+            context.bot.send_message(chat_id=chat_id,
                                      text=no_menu_msg(meal),
                                      reply_markup=start_button_kb())
         else:  # else reply user of the menu
             menu = menu_msg(parsed_date, meal, parse_menu(menu, hidden_cuisines))
             # send formatted menu to client
-            update.message.reply_text(text=menu,
-                                      parse_mode='HTML',
-                                      reply_markup=start_button_kb())
+            context.bot.send_message(chat_id=chat_id,
+                                     text=menu,
+                                     parse_mode=telegram.ParseMode.HTML,
+                                     reply_markup=start_button_kb())
 
     def get_menu_query_date(entered_date):
         if entered_date == '':

@@ -1,6 +1,6 @@
 import telegram
 
-from util.kb_mark_up import start_kb
+from util.kb_mark_up import start_kb, start_button_kb
 from util.messages import welcome_msg, help_msg
 import logging
 
@@ -15,6 +15,7 @@ def handle_start(update, context):
 def handle_help(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=help_msg(),
+                             reply_markup=start_button_kb(),
                              parse_mode=telegram.ParseMode.HTML)
 
 

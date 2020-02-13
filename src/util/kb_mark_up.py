@@ -9,10 +9,10 @@ start_button = InlineKeyboardButton(text="Back to start", callback_data="start.h
 
 def start_kb():
     button_list = [
-        InlineKeyboardButton(text="Breakfast Menu",     callback_data="settings.hidden"),
-        InlineKeyboardButton(text="Dinner Menu", callback_data="settings.notification"),
-        InlineKeyboardButton(text="Settings", callback_data="settings.notification"),
-        InlineKeyboardButton(text="Help", callback_data="start.help"),
+        InlineKeyboardButton(text="Breakfast Menu", callback_data="menu.breakfast"),
+        InlineKeyboardButton(text="Dinner Menu",    callback_data="menu.dinner"),
+        InlineKeyboardButton(text="Settings",       callback_data="settings.home"),
+        InlineKeyboardButton(text="Help",           callback_data="start.help"),
     ]
     return InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
 
@@ -43,7 +43,7 @@ def hidden_cuisine_kb(hidden_cuisine):
             InlineKeyboardButton(text=('❌ ' if c in hidden_cuisine else '✅ ') + capitalize(normalize(c)),
                                  callback_data="menu." + c),
             cuisines))
-    return InlineKeyboardMarkup(build_menu(kb_markup, n_cols=2, footer_buttons=[setting_button]))
+    return InlineKeyboardMarkup(build_menu(kb_markup, n_cols=2, footer_buttons=[setting_button, start_button]))
 
 
 def notification_kb(bf_sub, dn_sub):
@@ -53,7 +53,7 @@ def notification_kb(bf_sub, dn_sub):
         InlineKeyboardButton(('✅ ' if dn_sub else '❌ ') + "Dinner notification",
                              callback_data="settings.dinner_subscribe")
     ]
-    return InlineKeyboardMarkup(build_menu(kb_markup, n_cols=1, footer_buttons=[setting_button]))
+    return InlineKeyboardMarkup(build_menu(kb_markup, n_cols=1, footer_buttons=[setting_button, start_button]))
 
 
 def build_menu(buttons,

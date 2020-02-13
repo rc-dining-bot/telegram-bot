@@ -3,7 +3,7 @@ from util.const import COMMAND_LIST
 
 # general messages
 def welcome_msg(user_first_name):
-    return f'<b>Hello, {user_first_name}! Welcome! What do you like to check?</b>\n\n' \
+    return f'<b>Hello, {user_first_name}! Welcome back! What do you like to check?</b>\n\n' \
            f'<i>Press help button or use /help command to view different commands.</i>'
 
 

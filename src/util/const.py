@@ -13,6 +13,10 @@ SET_BREAKFAST_NOTIFICATION = 'subscribe_breakfast'
 SET_DINNER_NOTIFICATION = 'subscribe_dinner'
 BROADCAST_SUBSCRIPTION = '_subscribed'
 
+# start messages
+START_COMMAND = f'/{START}'
+START_DESC = f'{START_COMMAND} - welcome message\n'
+
 # menu messages
 BREAKFAST_COMMAND = f'/{BREAKFAST}'
 BREAKFAST_DESC = f'{BREAKFAST_COMMAND} - view breakfast menu today\n'
@@ -37,6 +41,7 @@ SET_DINNER_NOTIFICATION_DESC = f'{SET_DINNER_NOTIFICATION_COMMAND} ' \
                                f'- subscribe to dinner broadcast at <b>3PM</b> daily.\n'
 
 COMMAND_LIST = \
+    f'{START_DESC}' \
     f'{BREAKFAST_DESC}' \
     f'{DINNER_DESC}' \
     f'{SETTINGS_DESC}' \
