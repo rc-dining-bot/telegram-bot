@@ -33,6 +33,7 @@ def settings_insert():
     # chat_id
     # hidden cuisines table
     # favorite foods table
+    # (subscription status is set to False by default)
     return sql.SQL("INSERT INTO {table} VALUES (%s, %s, %s)").format(
         table=sql.Identifier('user_pref')
     )

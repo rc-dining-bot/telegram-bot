@@ -68,7 +68,7 @@ def get_raw_menu(meal, date):
 def insert_default_user_pref(chat_id):
     conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    cursor.execute(settings_insert(), (chat_id, '{}', '{}', 'false', 'false'))
+    cursor.execute(settings_insert(), (chat_id, '{}', '{}'))
     conn.commit()
     cursor.close()
 
@@ -79,6 +79,7 @@ def get_hidden_cuisines(chat_id):
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(settings_query(), (chat_id,))
     data = cursor.fetchone()
+    print(data)
 
     if data is None:
         # insert default settings

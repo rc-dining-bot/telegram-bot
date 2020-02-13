@@ -25,12 +25,17 @@ def handle_menu(meal):
         menu = get_raw_menu(meal, parsed_date)
         hidden_cuisines = get_hidden_cuisines(update.effective_chat.id)
 
+        print(menu)
+        print(menu.keys())
         if menu is None:  # if no menu, reply with no menu message
             context.bot.send_message(chat_id=update.effective_chat.id,
                                      text=no_menu_msg(meal),
                                      reply_markup=start_button_kb())
         else:  # else reply user of the menu
+            print(menu.keys())
+            print(menu)
             menu = menu_msg(parsed_date, meal, parse_menu(menu, hidden_cuisines))
+            print(menu)
             # send formatted menu to client
             update.message.reply_text(text=menu,
                                       parse_mode='HTML')
