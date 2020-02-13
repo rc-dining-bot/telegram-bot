@@ -54,7 +54,8 @@ def main():
     dispatcher.add_handler(CommandHandler(SET_DINNER_NOTIFICATION, handle_subscribe(meal=DINNER)))
 
     # add callback_query handler
-    dispatcher.add_handler(CallbackQueryHandler(handle_start, pattern='^start.+'))
+    dispatcher.add_handler(CallbackQueryHandler(handle_start, pattern='^start.home'))
+    dispatcher.add_handler(CallbackQueryHandler(handle_help, pattern='^start.help'))
     dispatcher.add_handler(CallbackQueryHandler(handle_settings, pattern='^settings.home'))
     dispatcher.add_handler(CallbackQueryHandler(handle_hidden_cuisine, pattern='^settings.hidden'))
     dispatcher.add_handler(CallbackQueryHandler(handle_notification, pattern='^settings.notification'))

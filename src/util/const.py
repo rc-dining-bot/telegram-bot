@@ -30,9 +30,11 @@ NO_FAVORITES_MSG = f'You have no favorite foods! Use {ADD_FAVORITE_COMMAND} [FOO
 HELP_COMMAND = '/help'
 HELP_DESC = f'{HELP_COMMAND} - show the help message\n'
 SET_BREAKFAST_NOTIFICATION_COMMAND = '/subscribe_breakfast'
-SET_BREAKFAST_NOTIFICATION_DESC = f'{SET_BREAKFAST_NOTIFICATION_COMMAND} - subscribe to breakfast broadcast at 12AM.\n'
+SET_BREAKFAST_NOTIFICATION_DESC = f'{SET_BREAKFAST_NOTIFICATION_COMMAND} ' \
+                                  f'- subscribe to breakfast broadcast at <b>12AM</b> daily.\n'
 SET_DINNER_NOTIFICATION_COMMAND = '/subscribe_dinner'
-SET_DINNER_NOTIFICATION_DESC = f'{SET_DINNER_NOTIFICATION_COMMAND} - subscribe to dinner broadcast at 3PM.\n'
+SET_DINNER_NOTIFICATION_DESC = f'{SET_DINNER_NOTIFICATION_COMMAND} ' \
+                               f'- subscribe to dinner broadcast at <b>3PM</b> daily.\n'
 
 COMMAND_LIST = \
     f'{BREAKFAST_DESC}' \

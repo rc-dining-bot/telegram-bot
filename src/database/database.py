@@ -139,10 +139,12 @@ def update_subscribe_setting(chat_id, meal):
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     field = meal + BROADCAST_SUBSCRIPTION
     cursor.execute(settings_query(), (chat_id,))
-    subscribed = cursor.fetchone()[meal + BROADCAST_SUBSCRIPTION]
-    subscribed = not subscribed
+    setting = cursor.fetchone()
+    subscribed = not setting[meal + BROADCAST_SUBSCRIPTION]
     cursor.execute(settings_update(field), (subscribed, chat_id))
     conn.commit()
     cursor.close()
-
-    return subscribed
+    if meal == BREAKFAST:
+        return not setting[BREAKFAST + BROADCAST_SUBSCRIPTION], setting[DINNER + BROADCAST_SUBSCRIPTION]
+    else:
+        return setting[BREAKFAST + BROADCAST_SUBSCRIPTION], not setting[DINNER + BROADCAST_SUBSCRIPTION]

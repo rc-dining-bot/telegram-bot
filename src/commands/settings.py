@@ -59,7 +59,10 @@ def handle_subscribe(meal):
 
     def toggle_subscribe(update, context):
         chat_id = update.effective_chat.id
-        update_subscribe_setting(chat_id=chat_id, meal=meal)
-        handle_notification(update, context)
+        bf_sub, dn_sub = update_subscribe_setting(chat_id=chat_id, meal=meal)
+        if update.callback_query is None:
+            handle_notification(update, context)
+        else:
+            update.callback_query.edit_message_reply_markup(reply_markup=notification_kb(bf_sub=bf_sub, dn_sub=dn_sub))
 
     return toggle_subscribe
