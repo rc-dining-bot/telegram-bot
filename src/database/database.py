@@ -79,7 +79,6 @@ def get_hidden_cuisines(chat_id):
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(settings_query(), (chat_id,))
     data = cursor.fetchone()
-    print(data)
 
     if data is None:
         # insert default settings
