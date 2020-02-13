@@ -16,7 +16,7 @@ from commands.settings import (
     handle_hide_cuisine,
     handle_subscribe,
     handle_notification)
-from database.database import connect
+from database.database import connect_database
 from scheduler.scheduler import scheduler
 from util.const import (
     START,

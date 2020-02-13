@@ -48,8 +48,7 @@ def handle_hide_cuisine(update, context):
 
 def handle_notification(update, context):
     chat_id = update.effective_chat.id
-    bf_sub = get_subscribe_setting(BREAKFAST, chat_id)
-    dn_sub = get_subscribe_setting(DINNER, chat_id)
+    bf_sub, dn_sub = get_subscribe_setting(chat_id)
     context.bot.send_message(chat_id=chat_id,
                              text=notification_view_msg(),
                              reply_markup=notification_kb(bf_sub=bf_sub, dn_sub=dn_sub))

@@ -1,6 +1,6 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
-setting_button = InlineKeyboardButton("settings", callback_data="settings.home")
+setting_button = InlineKeyboardButton("Settings", callback_data="settings.home")
 
 
 start_button = InlineKeyboardButton(text="Back to start", callback_data="start.home")

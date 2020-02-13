@@ -10,12 +10,11 @@ def menu_query(meal):
     )
 
 
-def settings_query(setting):
+def settings_query():
     # takes in 2 values:
     # user pref setting type;
     # chat_id
-    return sql.SQL("SELECT {setting} FROM {table} WHERE {pkey} = %s;").format(
-        setting=sql.Identifier(setting),
+    return sql.SQL("SELECT * FROM {table} WHERE {pkey} = %s;").format(
         table=sql.Identifier('user_pref'),
         pkey=sql.Identifier('chat_id')
     )

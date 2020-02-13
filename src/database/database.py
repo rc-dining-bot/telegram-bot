@@ -13,6 +13,8 @@ from database.queries import (
     settings_broadcast_subscribers_query
 )
 from util.const import (
+    BREAKFAST,
+    DINNER,
     HIDE_CUISINE,
     BROADCAST_SUBSCRIPTION
 )
@@ -66,7 +68,7 @@ def get_raw_menu(meal, date):
 def insert_default_user_pref(chat_id):
     conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    cursor.execute(settings_insert(), (chat_id, '{}', '{}'))
+    cursor.execute(settings_insert(), (chat_id, '{}', '{}', 'false', 'false'))
     conn.commit()
     cursor.close()
 
@@ -74,9 +76,8 @@ def insert_default_user_pref(chat_id):
 def get_hidden_cuisines(chat_id):
     conn = connect_database()
     # get hidden cuisines of a user from database
-    conn = connect()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    cursor.execute(settings_query(HIDE_CUISINE), (chat_id,))
+    cursor.execute(settings_query(), (chat_id,))
     data = cursor.fetchone()
 
     if data is None:
@@ -100,14 +101,17 @@ def get_broadcast_subscribers(meal):
     return data
 
 
-def get_subscribe_setting(meal, chat_id):
+def get_subscribe_setting(chat_id):
     # get user's subscribe setting from database based on meal
+    # returns breakfast and dinner subscription status
     conn = connect_database()
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cursor.execute(settings_query(meal + BROADCAST_SUBSCRIPTION), (chat_id,))
-    [data] = cursor.fetchone()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cursor.execute(settings_query(), (chat_id,))
+    data = cursor.fetchone()
+    bf_sub = data[BREAKFAST + BROADCAST_SUBSCRIPTION]
+    dn_sub = data[DINNER + BROADCAST_SUBSCRIPTION]
 
-    return data
+    return bf_sub, dn_sub
 
 
 def update_hidden_cuisine(chat_id, cuisine_to_hide):
@@ -131,11 +135,11 @@ def update_hidden_cuisine(chat_id, cuisine_to_hide):
 
 def update_subscribe_setting(chat_id, meal):
     # update database
-    conn = connect()
+    conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     field = meal + BROADCAST_SUBSCRIPTION
-    cursor.execute(settings_query(field), (chat_id,))
-    [subscribed] = cursor.fetchone()
+    cursor.execute(settings_query(), (chat_id,))
+    subscribed = cursor.fetchone()[meal + BROADCAST_SUBSCRIPTION]
     subscribed = not subscribed
     cursor.execute(settings_update(field), (subscribed, chat_id))
     cursor.close()

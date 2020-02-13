@@ -30,7 +30,7 @@ def handle_menu(meal):
                                      text=no_menu_msg(meal),
                                      reply_markup=start_button_kb())
         else:  # else reply user of the menu
-            msg = menu_msg(date.today(), meal, parse_menu(menu, hidden_cuisines))
+            menu = menu_msg(parsed_date, meal, parse_menu(menu, hidden_cuisines))
             # send formatted menu to client
             update.message.reply_text(text=menu,
                                       parse_mode='HTML')

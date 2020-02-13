@@ -1,9 +1,9 @@
-from util.util import localize_time
+from util.util import localized_time
 
 # broadcast timings
-BREAKFAST_BROADCAST_TIME = localize_time(hour=0,
-                                         minute=0,
-                                         second=0)
-DINNER_BROADCAST_TIME = localize_time(hour=15,
-                                      minute=0,
-                                      second=0)
+BREAKFAST_BROADCAST_TIME = localized_time(hour=0,
+                                          minute=0,
+                                          second=0)
+DINNER_BROADCAST_TIME = localized_time(hour=15,
+                                       minute=0,
+                                       second=0)

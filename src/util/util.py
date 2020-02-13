@@ -22,5 +22,6 @@ def parse_callback(data):
     return split_data[0], split_data[1]
 
 
-def localize_time(hour, minute, second):
+def localized_time(hour, minute, second):
+    # localized time to Asia/Singapore, assuming the machine is running in utc timezone
     return (datetime.combine(date.today(), time(hour=hour, minute=minute, second=second)) + timedelta(hours=-8)).time()
