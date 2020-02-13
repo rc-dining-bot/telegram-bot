@@ -18,8 +18,7 @@ from commands.general import (
     handle_error
 )
 from commands.settings import handle_settings, handle_hidden_cuisine, handle_hide_cuisine
-from database.database import connect
-
+from database.database import connect_database
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -36,8 +35,7 @@ def main():
     # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler(START, handle_start))
     dispatcher.add_handler(CommandHandler(HELP, handle_help))
-    dispatcher.add_handler(CommandHandler(
-        BREAKFAST, handle_menu(meal=BREAKFAST)))
+    dispatcher.add_handler(CommandHandler(BREAKFAST, handle_menu(meal=BREAKFAST)))
     dispatcher.add_handler(CommandHandler(DINNER, handle_menu(meal=DINNER)))
     dispatcher.add_handler(CommandHandler(SETTINGS, handle_settings))
     dispatcher.add_handler(CommandHandler(HIDE_CUISINE, handle_hidden_cuisine))
@@ -62,6 +60,6 @@ def main():
 
 if __name__ == '__main__':
     logging.info("Bot is running")
-    load_dotenv()
-    connect()
+    load_dotenv()  # for environment file
+    connect_database()
     main()

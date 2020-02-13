@@ -12,7 +12,7 @@ from util.const import HIDE_CUISINE
 _connection = None
 
 
-def connect():
+def connect_database():
     """ Connect to the PostgreSQL database server"""
     global _connection
     # if connection is already formed, return connection
@@ -46,7 +46,7 @@ def connect():
 
 def get_menu(meal, date):
     # get menu from database
-    conn = connect()
+    conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(menu_query(meal), (date,))
     menu = cursor.fetchone()
@@ -55,7 +55,7 @@ def get_menu(meal, date):
 
 
 def insert_default_user_pref(chat_id):
-    conn = connect()
+    conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(settings_insert(), (chat_id, '{}', '{}'))
     conn.commit()
@@ -63,7 +63,7 @@ def insert_default_user_pref(chat_id):
 
 
 def get_hidden_cuisines(chat_id):
-    conn = connect()
+    conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(settings_query(HIDE_CUISINE), (chat_id,))
     data = cursor.fetchone()
@@ -88,7 +88,7 @@ def update_hidden_cuisine(chat_id, cuisine_to_hide):
         hidden_cuisines.append(cuisine_to_hide)
 
     # update database
-    conn = connect()
+    conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(settings_update(HIDE_CUISINE), (hidden_cuisines, chat_id))
     conn.commit()

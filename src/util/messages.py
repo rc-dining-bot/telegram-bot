@@ -3,12 +3,12 @@ from util.const import COMMAND_LIST
 
 # general messages
 def welcome_msg(user_first_name):
-    return f'Hello, {user_first_name}! Welcome! To get started, enter one of the following commands:\n\n' \
+    return f'<b>Hello, {user_first_name}! Welcome! To get started, enter one of the following commands:</b>\n\n' \
            f'{COMMAND_LIST}'
 
 
 def help_msg():
-    return f'Hello, these are RC Dining Bot\'s commands:\n{COMMAND_LIST}'
+    return f'<b>Hello, these are RC Dining Bot\'s commands:</b>\n{COMMAND_LIST}'
 
 
 # menu messages
@@ -26,24 +26,24 @@ def failed_to_parse_date_msg(entered_date):
 
 # setting messages
 def settings_msg():
-    return 'Hi, here is the menu for settings:\n'
+    return '<b>Hi, here is the menu for settings:</b>\n'
 
 
 def no_hidden_cuisine_msg():
-    return 'You do not have any hidden cuisine.'
+    return '<b>You do not have any hidden cuisines.</b>'
 
 
 def hidden_cuisine_msg(name):
-    return f'Hi, {name}, you hid the following cuisines\n'
+    return f'<b>Hi, {name}, you hid the following cuisines</b>\n'
 
 
 def favorites_msg(favorites):
-    return f'These are your current favorites:\n{favorites}'
+    return f'<b>These are your current favorites:</b>\n{favorites}'
 
 
 def added_favorites_msg(favorites):
-    return f'You have updated your favorites. {favorites_msg(favorites)}'
+    return f'<b>You have updated your favorites.</b> {favorites_msg(favorites)}'
 
 
 def menu_has_favorite_msg(favorite):
-    return f'Hey! This meal contains {favorite}'
+    return f'<b>Hey! This meal contains</b> {favorite}'
