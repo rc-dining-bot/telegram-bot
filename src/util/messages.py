@@ -3,8 +3,8 @@ from util.const import COMMAND_LIST
 
 # general messages
 def welcome_msg(user_first_name):
-    return f'<b>Hello, {user_first_name}! Welcome! To get started, enter one of the following commands:</b>\n\n' \
-           f'{COMMAND_LIST}'
+    return f'<b>Hello, {user_first_name}! Welcome back! What do you like to check?</b>\n\n' \
+           f'<i>Press help button or use /help command to view different commands.</i>'
 
 
 def help_msg():
@@ -47,3 +47,7 @@ def added_favorites_msg(favorites):
 
 def menu_has_favorite_msg(favorite):
     return f'<b>Hey! This meal contains</b> {favorite}'
+
+
+def notification_view_msg():
+    return f'You have subscribed to the following meal broadcast:'

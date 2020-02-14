@@ -9,6 +9,13 @@ FAVORITE = 'favorite'
 NOTIFICATION = 'notification'
 HOME = 'home'
 HIDE_CUISINE = 'hidden'
+SET_BREAKFAST_NOTIFICATION = 'subscribe_breakfast'
+SET_DINNER_NOTIFICATION = 'subscribe_dinner'
+BROADCAST_SUBSCRIPTION = '_subscribed'
+
+# start messages
+START_COMMAND = f'/{START}'
+START_DESC = f'{START_COMMAND} - welcome message\n'
 
 # menu messages
 BREAKFAST_COMMAND = f'/{BREAKFAST}'
@@ -26,13 +33,20 @@ REMOVE_FAVORITE_DESC = f'{REMOVE_FAVORITE_COMMAND} - remove favorite food from n
 NO_FAVORITES_MSG = f'You have no favorite foods! Use {ADD_FAVORITE_COMMAND} [FOOD] to add one!'
 HELP_COMMAND = '/help'
 HELP_DESC = f'{HELP_COMMAND} - show the help message\n'
+SET_BREAKFAST_NOTIFICATION_COMMAND = '/subscribe_breakfast'
+SET_BREAKFAST_NOTIFICATION_DESC = f'{SET_BREAKFAST_NOTIFICATION_COMMAND} ' \
+                                  f'- subscribe to breakfast broadcast at <b>12AM</b> daily.\n'
+SET_DINNER_NOTIFICATION_COMMAND = '/subscribe_dinner'
+SET_DINNER_NOTIFICATION_DESC = f'{SET_DINNER_NOTIFICATION_COMMAND} ' \
+                               f'- subscribe to dinner broadcast at <b>3PM</b> daily.\n'
 
 COMMAND_LIST = \
+    f'{START_DESC}' \
     f'{BREAKFAST_DESC}' \
     f'{DINNER_DESC}' \
-    f'{ADD_FAVORITE_DESC}' \
-    f'{REMOVE_FAVORITE_DESC}' \
     f'{SETTINGS_DESC}' \
+    f'{SET_BREAKFAST_NOTIFICATION_DESC}' \
+    f'{SET_DINNER_NOTIFICATION_DESC}' \
     f'{HELP_DESC}' \
     f'\n' \
     f'<b>NOTE:</b> {BREAKFAST_COMMAND} (or {DINNER_COMMAND}) [DAY] - view the breakfast/dinner menu ' \

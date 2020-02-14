@@ -1,12 +1,23 @@
-import os
-import psycopg2
 import logging
+import os
 import sys
 
+import psycopg2
 import psycopg2.extras
 
-from database.queries import menu_query, settings_query, settings_insert, settings_update
-from util.const import HIDE_CUISINE
+from database.queries import (
+    menu_query,
+    settings_query,
+    settings_insert,
+    settings_update,
+    settings_broadcast_subscribers_query
+)
+from util.const import (
+    BREAKFAST,
+    DINNER,
+    HIDE_CUISINE,
+    BROADCAST_SUBSCRIPTION
+)
 
 # global connection
 _connection = None
@@ -44,7 +55,7 @@ def connect_database():
         sys.exit(1)
 
 
-def get_menu(meal, date):
+def get_raw_menu(meal, date):
     # get menu from database
     conn = connect_database()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
@@ -64,8 +75,9 @@ def insert_default_user_pref(chat_id):
 
 def get_hidden_cuisines(chat_id):
     conn = connect_database()
+    # get hidden cuisines of a user from database
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    cursor.execute(settings_query(HIDE_CUISINE), (chat_id,))
+    cursor.execute(settings_query(), (chat_id,))
     data = cursor.fetchone()
 
     if data is None:
@@ -79,7 +91,31 @@ def get_hidden_cuisines(chat_id):
     return hidden  # returns hidden cuisines in user_pref
 
 
+def get_broadcast_subscribers(meal):
+    # get broadcast subscribers from database based on meal
+    conn = connect_database()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute(settings_broadcast_subscribers_query(meal), ('true',))
+    data = cursor.fetchall()
+
+    return data
+
+
+def get_subscribe_setting(chat_id):
+    # get user's subscribe setting from database based on meal
+    # returns breakfast and dinner subscription status
+    conn = connect_database()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cursor.execute(settings_query(), (chat_id,))
+    data = cursor.fetchone()
+    bf_sub = data[BREAKFAST + BROADCAST_SUBSCRIPTION]
+    dn_sub = data[DINNER + BROADCAST_SUBSCRIPTION]
+
+    return bf_sub, dn_sub
+
+
 def update_hidden_cuisine(chat_id, cuisine_to_hide):
+    # updates hidden cuisine of a user
     hidden_cuisines = get_hidden_cuisines(chat_id)
 
     if cuisine_to_hide in hidden_cuisines:
@@ -95,3 +131,20 @@ def update_hidden_cuisine(chat_id, cuisine_to_hide):
     cursor.close()
 
     return hidden_cuisines
+
+
+def update_subscribe_setting(chat_id, meal):
+    # update database
+    conn = connect_database()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    field = meal + BROADCAST_SUBSCRIPTION
+    cursor.execute(settings_query(), (chat_id,))
+    setting = cursor.fetchone()
+    subscribed = not setting[meal + BROADCAST_SUBSCRIPTION]
+    cursor.execute(settings_update(field), (subscribed, chat_id))
+    conn.commit()
+    cursor.close()
+    if meal == BREAKFAST:
+        return not setting[BREAKFAST + BROADCAST_SUBSCRIPTION], setting[DINNER + BROADCAST_SUBSCRIPTION]
+    else:
+        return setting[BREAKFAST + BROADCAST_SUBSCRIPTION], not setting[DINNER + BROADCAST_SUBSCRIPTION]
