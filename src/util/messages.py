@@ -51,3 +51,7 @@ def menu_has_favorite_msg(favorite):
 
 def notification_view_msg():
     return f'You have subscribed to the following meal broadcast:'
+
+
+def unable_to_retrieve_information_msg():
+    return 'Unable to retrieve information :('

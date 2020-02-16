@@ -12,6 +12,7 @@ HIDE_CUISINE = 'hidden'
 SET_BREAKFAST_NOTIFICATION = 'subscribe_breakfast'
 SET_DINNER_NOTIFICATION = 'subscribe_dinner'
 BROADCAST_SUBSCRIPTION = '_subscribed'
+RV_COUNT = 'rvcount'
 
 # start messages
 START_COMMAND = f'/{START}'
