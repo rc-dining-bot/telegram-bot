@@ -1,5 +1,5 @@
 # telegram-bot
-Telegram bot server for RC Dining Bot to replace @rc_meal_bot which became dysfunctional after
+Telegram bot server for RC Dining Bot to replace @rcmealbot which became dysfunctional after
 change of data format in end of 2019.
 
 It now comes with a Graphic User Interface design.
@@ -19,6 +19,8 @@ It now comes with a Graphic User Interface design.
     * Dinner will be broadcast at 3 PM daily
     * TODO: customizable broadcast timings
 5. Help menu: `/help`
+6. (For COVID-19 period) Check RVRC dining hall occupancy: /rvcount
+    * We have only acquired the access to RVRC dining hall data so far.
 
 ## Requirement
 * Set up PostgreSQL database locally/online

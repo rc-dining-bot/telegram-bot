@@ -19,9 +19,9 @@ START_DESC = f'{START_COMMAND} - welcome message\n'
 
 # menu messages
 BREAKFAST_COMMAND = f'/{BREAKFAST}'
-BREAKFAST_DESC = f'{BREAKFAST_COMMAND} - view breakfast menu today\n'
+BREAKFAST_DESC = f'{BREAKFAST_COMMAND} - view breakfast menu today. Breakfast is served 7:00-10:30AM daily.\n'
 DINNER_COMMAND = f'/{DINNER}'
-DINNER_DESC = f'{DINNER_COMMAND} - view dinner menu today\n'
+DINNER_DESC = f'{DINNER_COMMAND} - view dinner menu today. Dinner is served 5:30-9:30AM daily.\n'
 
 # setting messages
 SETTINGS_COMMAND = f'/{SETTINGS}'
@@ -39,6 +39,10 @@ SET_BREAKFAST_NOTIFICATION_DESC = f'{SET_BREAKFAST_NOTIFICATION_COMMAND} ' \
 SET_DINNER_NOTIFICATION_COMMAND = '/subscribe_dinner'
 SET_DINNER_NOTIFICATION_DESC = f'{SET_DINNER_NOTIFICATION_COMMAND} ' \
                                f'- subscribe to dinner broadcast at <b>3PM</b> daily.\n'
+CHECK_RVRC_DINING_COUNT_COMMAND = '/rvcount'
+CHECK_RVRC_DINING_COUNT_DESC = f'{CHECK_RVRC_DINING_COUNT_COMMAND} ' \
+                               f'- check RVRC dining hall occupancy ' \
+                               f'(while the COVID-19 control measure is still in place.)\n'
 
 COMMAND_LIST = \
     f'{START_DESC}' \
@@ -48,6 +52,7 @@ COMMAND_LIST = \
     f'{SET_BREAKFAST_NOTIFICATION_DESC}' \
     f'{SET_DINNER_NOTIFICATION_DESC}' \
     f'{HELP_DESC}' \
+    f'{CHECK_RVRC_DINING_COUNT_DESC}' \
     f'\n' \
     f'<b>NOTE:</b> {BREAKFAST_COMMAND} (or {DINNER_COMMAND}) [DAY] - view the breakfast/dinner menu ' \
     f'for a particular day\n' \
