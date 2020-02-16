@@ -2,6 +2,24 @@
 Telegram bot server for RC Dining Bot to replace @rc_meal_bot which became dysfunctional after
 change of data format in end of 2019.
 
+It now comes with a Graphic User Interface design.
+
+## Functionality
+1. Check daily meal menus: `/breakfast` and `/dinner` 
+    * Note: command with payload display menu of the day specified.
+    * e.g. `/breakfast tomorrow` or `/dinner yesterday`
+2. Check settings: `/settings`
+    * Menu of customizable settings available
+3. Hide menu items: `/hidden` or `Toggle Menu Visibility` button
+    * Hide certain cuisines and menu items you no long wish to see in the menu.
+    * e.g. vegetarians can choose to hide non-vegetarian options
+4. Turn on menu notification: `/subscribe_breakfast` and `/subscribe_dinner`
+    * Alternatively, `Toggle Notification Settings` button
+    * Breakfast will be broadcast at 12 AM daily
+    * Dinner will be broadcast at 3 PM daily
+    * TODO: customizable broadcast timings
+5. Help menu: `/help`
+
 ## Requirement
 * Set up PostgreSQL database locally/online
 * Configure `.env` file with template `.env.example`
@@ -18,3 +36,5 @@ change of data format in end of 2019.
 6. Create tables using queries in db_setup.txt.
 7. Grant permissions if necessary for every table.
 8. Configure `.env` file accordingly.
+
+## License : [MIT](./LICENSE)
