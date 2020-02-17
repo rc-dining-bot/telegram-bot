@@ -33,7 +33,9 @@ from util.const import (
 )
 
 # Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+logging.basicConfig(filename="logging.log",
+                    filemode='a',
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
 
@@ -75,6 +77,9 @@ def main():
     # start the Bot
     updater.start_polling()
 
+    logging.info("Bot started.")
+    print("Bot started.")
+
     # start the scheduler which broadcasts the menus
     scheduler(updater.job_queue)
 
@@ -85,7 +90,8 @@ def main():
 
 
 if __name__ == '__main__':
-    logging.info("Bot is running")
+    logging.info("Bot is running...")
+    print("Bot is running...")
     load_dotenv()  # for environment file
     connect_database()
     main()

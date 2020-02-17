@@ -33,6 +33,7 @@ def connect_database():
     try:
         # connect to the PostgreSQL server
         logging.info("Connecting to the PostgreSQL database...")
+        print("Connecting to the PostgreSQL database...")
         _connection = psycopg2.connect(host=os.getenv("RC_DINING_BOT_HOST"),
                                        database=os.getenv("RC_DINING_BOT_DATABASE"),
                                        user=os.getenv("RC_DINING_BOT_DB_USER"),
@@ -50,8 +51,10 @@ def connect_database():
         logging.info(db_version)
 
         cursor.close()
+        print("Database connected")
     except Exception as error:
         logging.fatal(error)
+        print(error)
         sys.exit(1)
 
 
@@ -71,6 +74,7 @@ def insert_default_user_pref(chat_id):
     cursor.execute(settings_insert(), (chat_id, '{}', '{}'))
     conn.commit()
     cursor.close()
+    logging.info(f'New user recorded, chat_id: {chat_id}')
 
 
 def get_hidden_cuisines(chat_id):
@@ -108,8 +112,15 @@ def get_subscribe_setting(chat_id):
     cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(settings_query(), (chat_id,))
     data = cursor.fetchone()
-    bf_sub = data[BREAKFAST + BROADCAST_SUBSCRIPTION]
-    dn_sub = data[DINNER + BROADCAST_SUBSCRIPTION]
+
+    # default values
+    if data is None:
+        # insert default settings
+        insert_default_user_pref(chat_id)
+        bf_sub, dn_sub = False, False
+    else:
+        bf_sub = data[BREAKFAST + BROADCAST_SUBSCRIPTION]
+        dn_sub = data[DINNER + BROADCAST_SUBSCRIPTION]
 
     return bf_sub, dn_sub
 
