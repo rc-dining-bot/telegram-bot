@@ -10,13 +10,11 @@ from database.database import (
 from scheduler.scheduler_config import BREAKFAST_BROADCAST_TIME, DINNER_BROADCAST_TIME
 from util.const import BREAKFAST, DINNER
 from util.messages import menu_msg
-from util.util import parse_menu
+from util.util import parse_menu, localized_date_today
 
 
 def scheduler(job_queue):
-    # set timezone to Singapore for AWS instance
-    os.environ['TZ'] = 'Singapore'
-
+    print(localized_date_today())
     # schedule breakfast and dinner broadcasts
 
     job_queue.run_daily(callback=meal_broadcast(BREAKFAST),
@@ -29,7 +27,7 @@ def scheduler(job_queue):
 def meal_broadcast(meal):
     def send_menu(context):
         # get menu today
-        menu = get_raw_menu(meal, date.today())
+        menu = get_raw_menu(meal, localized_date_today())
 
         if menu is None:
             return
@@ -42,11 +40,12 @@ def meal_broadcast(meal):
         for user_id in subscribers:
             chat_id = user_id[0]  # extracts chat_id from nested [] from database
             hidden_cuisines = get_hidden_cuisines(chat_id)
-            context.bot.send_message(chat_id,
-                                     menu_msg(date.today(),
-                                              meal,
-                                              parse_menu(menu, hidden_cuisines)),
+            context.bot.send_message(chat_id=chat_id,
+                                     text=menu_msg(date.today(),
+                                                   meal,
+                                                   parse_menu(menu, hidden_cuisines)),
                                      parse_mode='HTML')
 
         logging.info("meal broadcast finished")
+
     return send_menu

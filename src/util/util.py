@@ -22,6 +22,12 @@ def parse_callback(data):
     return split_data[0], split_data[1]
 
 
-def localized_time(hour, minute, second):
-    # localized time to Asia/Singapore, assuming the machine is running in utc timezone
-    return (datetime.combine(date.today(), time(hour=hour, minute=minute, second=second)) + timedelta(hours=-8)).time()
+def utc_time(hour, minute, second):
+    # time input - 8 hours = utc time
+    # assuming the users are in Asia/Singapore timezone
+    return (datetime.combine(date.today(), time(hour=hour, minute=minute, second=second)) + timedelta(hours=8)).time()
+
+
+def localized_date_today():
+    # localized date to Asia/Singapore, assuming the machine is running in utc timezone
+    return (datetime.now() + timedelta(hours=8)).date()
