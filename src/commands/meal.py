@@ -15,6 +15,7 @@ from dateparser import parse
 def handle_menu(meal):
     assert meal == BREAKFAST or meal == DINNER, "Meal input is incorrect."
 
+    # in this function, parsed_date returns date in Singapore time. As such, no conversion is required.
     def get_breakfast_or_dinner_menu(update, context):
         chat_id = update.effective_chat.id
         # send the user menu

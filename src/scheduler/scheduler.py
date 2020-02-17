@@ -24,6 +24,10 @@ def scheduler(job_queue):
 
 # meal broadcast function
 def meal_broadcast(meal):
+
+    # use localized_date_today() in this function instead of date.today()
+    # as the VM provided by NUS is running in UTC time.
+
     def send_menu(context):
         # get menu today
         menu = get_raw_menu(meal, localized_date_today())
@@ -40,7 +44,7 @@ def meal_broadcast(meal):
             chat_id = user_id[0]  # extracts chat_id from nested [] from database
             hidden_cuisines = get_hidden_cuisines(chat_id)
             context.bot.send_message(chat_id=chat_id,
-                                     text=menu_msg(date.today(),
+                                     text=menu_msg(localized_date_today(),
                                                    meal,
                                                    parse_menu(menu, hidden_cuisines)),
                                      parse_mode='HTML')
