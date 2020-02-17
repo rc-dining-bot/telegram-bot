@@ -5,7 +5,7 @@ from util.const import (
     DINNER
 )
 from util.messages import no_menu_msg, menu_msg, failed_to_parse_date_msg
-from util.util import parse_menu
+from util.util import parse_menu, localized_date_today
 from database.database import get_raw_menu, get_hidden_cuisines
 from util.kb_mark_up import start_button_kb
 from datetime import date
@@ -46,7 +46,7 @@ def handle_menu(meal):
 
     def get_menu_query_date(entered_date):
         if entered_date == '':
-            return date.today()
+            return localized_date_today()
 
         parsed_date = parse(entered_date)
         if parsed_date is None:
