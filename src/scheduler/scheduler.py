@@ -14,7 +14,6 @@ from util.util import parse_menu, localized_date_today
 
 
 def scheduler(job_queue):
-    print(localized_date_today())
     # schedule breakfast and dinner broadcasts
 
     job_queue.run_daily(callback=meal_broadcast(BREAKFAST),
