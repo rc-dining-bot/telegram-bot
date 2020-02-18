@@ -48,6 +48,7 @@ def meal_broadcast(meal):
                                                    meal,
                                                    parse_menu(menu, hidden_cuisines)),
                                      parse_mode='HTML')
+            logging.info(f"{chat_id}: {meal} menu broadcast")
 
         logging.info("meal broadcast finished")
 

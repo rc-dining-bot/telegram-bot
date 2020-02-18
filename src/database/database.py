@@ -141,7 +141,7 @@ def update_hidden_cuisine(chat_id, cuisine_to_hide):
     conn.commit()
     cursor.close()
 
-    logging.info(chat_id + ": hidden cuisine updated")
+    logging.info(f"{chat_id}: hidden cuisine updated")
 
     return hidden_cuisines
 
@@ -158,7 +158,7 @@ def update_subscribe_setting(chat_id, meal):
     conn.commit()
     cursor.close()
 
-    logging.info(chat_id + ": subscription status updated")
+    logging.info(f"{chat_id}: subscription status updated")
 
     if meal == BREAKFAST:
         return not setting[BREAKFAST + BROADCAST_SUBSCRIPTION], setting[DINNER + BROADCAST_SUBSCRIPTION]
