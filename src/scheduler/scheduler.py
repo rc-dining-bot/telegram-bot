@@ -38,7 +38,7 @@ def meal_broadcast(meal):
         # get the subscribers before the broadcast
         subscribers = get_broadcast_subscribers(meal)
 
-        logging.info("meal broadcast in progress")
+        logging.info(f"meal broadcast in progress... number of subscribers: {len(subscribers)}")
 
         for user_id in subscribers:
             chat_id = user_id[0]  # extracts chat_id from nested [] from database

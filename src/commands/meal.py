@@ -1,3 +1,5 @@
+import logging
+
 import telegram
 
 from util.const import (
@@ -45,6 +47,7 @@ def handle_menu(meal):
                                      text=menu,
                                      parse_mode=telegram.ParseMode.HTML,
                                      reply_markup=start_button_kb())
+        logging.info(meal + " menu sent to chat " + chat_id)
 
     def get_menu_query_date(entered_date):
         if entered_date == '':
