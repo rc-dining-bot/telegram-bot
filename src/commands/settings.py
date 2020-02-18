@@ -21,6 +21,8 @@ from util.messages import (
 
 # settings menu
 def handle_settings(update, context):
+    if update.callback_query is not None:
+        context.bot.answer_callback_query(update.callback_query.id)
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=settings_msg(),
                              reply_markup=settings_kb(),
@@ -29,6 +31,8 @@ def handle_settings(update, context):
 
 # hidden cuisine panel
 def handle_hidden_cuisine(update, context):
+    if update.callback_query is not None:
+        context.bot.answer_callback_query(update.callback_query.id)
     hidden_cuisine = get_hidden_cuisines(update.effective_chat.id)
     msg = no_hidden_cuisine_msg() if not hidden_cuisine else hidden_cuisine_msg(update.effective_chat.first_name)
 
@@ -40,6 +44,8 @@ def handle_hidden_cuisine(update, context):
 
 # update keyboard markup after updating hide cuisine panel
 def handle_hide_cuisine(update, context):
+    if update.callback_query is not None:
+        context.bot.answer_callback_query(update.callback_query.id)
     cuisine_to_hide = parse_callback(update.callback_query.data)[1]
     updated_hidden_cuisine = update_hidden_cuisine(update.effective_chat.id, cuisine_to_hide)
 
@@ -47,6 +53,8 @@ def handle_hide_cuisine(update, context):
 
 
 def handle_notification(update, context):
+    if update.callback_query is not None:
+        context.bot.answer_callback_query(update.callback_query.id)
     chat_id = update.effective_chat.id
     bf_sub, dn_sub = get_subscribe_setting(chat_id)
     context.bot.send_message(chat_id=chat_id,
@@ -58,6 +66,8 @@ def handle_subscribe(meal):
     assert meal == BREAKFAST or meal == DINNER, "Meal input is incorrect."
 
     def toggle_subscribe(update, context):
+        if update.callback_query is not None:
+            context.bot.answer_callback_query(update.callback_query.id)
         chat_id = update.effective_chat.id
         bf_sub, dn_sub = update_subscribe_setting(chat_id=chat_id, meal=meal)
         if update.callback_query is None:
