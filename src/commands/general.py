@@ -1,10 +1,12 @@
 import telegram
+from telegram.ext import run_async
 
 from util.kb_mark_up import start_kb, start_button_kb
 from util.messages import welcome_msg, help_msg
 import logging
 
 
+@run_async
 def handle_start(update, context):
     if update.callback_query is not None:
         context.bot.answer_callback_query(update.callback_query.id)
@@ -14,6 +16,7 @@ def handle_start(update, context):
                              parse_mode=telegram.ParseMode.HTML)
 
 
+@run_async
 def handle_help(update, context):
     if update.callback_query is not None:
         context.bot.answer_callback_query(update.callback_query.id)
