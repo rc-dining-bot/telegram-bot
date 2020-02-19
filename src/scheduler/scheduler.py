@@ -9,6 +9,7 @@ from database.database import (
 )
 from scheduler.scheduler_config import BREAKFAST_BROADCAST_TIME, DINNER_BROADCAST_TIME
 from util.const import BREAKFAST, DINNER
+from util.kb_mark_up import start_button_kb
 from util.messages import menu_msg
 from util.util import parse_menu, localized_date_today
 
@@ -47,6 +48,7 @@ def meal_broadcast(meal):
                                      text=menu_msg(localized_date_today(),
                                                    meal,
                                                    parse_menu(menu, hidden_cuisines)),
+                                     reply_markup=start_button_kb(),
                                      parse_mode='HTML')
             logging.info(f"{chat_id}: {meal} menu broadcast")
 
