@@ -42,7 +42,7 @@ logging.basicConfig(filename="logging.log",
 def main():
     """Start the bot."""
     # Set use_context=True to use the new context based callbacks
-    updater = Updater(token=os.getenv('RC_DINING_BOT_TOKEN'), use_context=True)
+    updater = Updater(token=os.getenv('RC_DINING_BOT_TOKEN'), use_context=True, workers=32)
 
     # Get the dispatcher to
     dispatcher = updater.dispatcher
