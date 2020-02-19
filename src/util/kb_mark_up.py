@@ -12,6 +12,7 @@ def start_kb():
         InlineKeyboardButton(text="Breakfast Menu", callback_data="menu.breakfast"),
         InlineKeyboardButton(text="Dinner Menu",    callback_data="menu.dinner"),
         InlineKeyboardButton(text="Settings",       callback_data="settings.home"),
+        InlineKeyboardButton(text="Meal credit (Login required)", url="https://aces.nus.edu.sg/Prjhml/"),
         InlineKeyboardButton(text="Help",           callback_data="start.help"),
     ]
     return InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
