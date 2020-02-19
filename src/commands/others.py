@@ -1,6 +1,7 @@
 import requests
 import logging
 
+from util.kb_mark_up import start_button_kb
 from util.messages import unable_to_retrieve_information_msg
 
 
@@ -29,7 +30,12 @@ def get_rv_count():
 
 def handle_rv_count(update, context):
     numPax = get_rv_count()
+    chat_id = update.effective_chat.id
     if numPax is None:
-        update.message.reply_text(unable_to_retrieve_information_msg())
+        context.bot.send_message(chat_id=chat_id,
+                                 text=unable_to_retrieve_information_msg(),
+                                 reply_markup=start_button_kb())
     else:
-        update.message.reply_text(str(numPax) + ' pax')
+        context.bot.send_message(chat_id=chat_id,
+                                 text=f'{numPax} pax',
+                                 reply_markup=start_button_kb())

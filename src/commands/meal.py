@@ -18,8 +18,6 @@ def handle_menu(meal):
 
     # in this function, parsed_date returns date in Singapore time. As such, no conversion is required.
     def get_breakfast_or_dinner_menu(update, context):
-        if update.callback_query is not None:
-            context.bot.answer_callback_query(update.callback_query.id)
         chat_id = update.effective_chat.id
         # send the user menu
         entered_date = ''
@@ -60,6 +58,9 @@ def handle_menu(meal):
                                           parse_mode=telegram.ParseMode.HTML,
                                           reply_markup=start_button_kb())
         logging.info(f"{chat_id}: {meal} menu sent to chat")
+
+        if update.callback_query is not None:
+            context.bot.answer_callback_query(update.callback_query.id)
 
     def get_menu_query_date(entered_date):
         if entered_date == '':
