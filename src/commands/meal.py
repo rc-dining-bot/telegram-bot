@@ -26,13 +26,8 @@ def handle_menu(meal):
         parsed_date = get_menu_query_date(entered_date)
 
         if parsed_date is None:
-            if update.callback_query is not None:
-                context.bot.edit_message_text(chat_id=chat_id,
-                                              message_id=update.callback_query.message.message_id,
-                                              text=failed_to_parse_date_msg(entered_date))
-            else:
-                context.bot.send_message(chat_id=chat_id,
-                                         text=failed_to_parse_date_msg(entered_date))
+            context.bot.send_message(chat_id=chat_id,
+                                     text=failed_to_parse_date_msg(entered_date))
             return
 
         menu = get_raw_menu(meal, parsed_date)
