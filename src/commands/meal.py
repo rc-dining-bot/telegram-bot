@@ -47,11 +47,15 @@ def handle_menu(meal):
         else:  # else reply user of the menu
             menu = menu_msg(parsed_date, meal, parse_menu(menu, hidden_cuisines))
             # send formatted menu to client
-            context.bot.edit_message_text(chat_id=chat_id,
-                                          message_id=update.callback_query.message.message_id,
-                                          text=menu,
-                                          parse_mode=telegram.ParseMode.HTML,
-                                          reply_markup=start_button_kb())
+            if update.callback_query is not None:
+                context.bot.edit_message_text(chat_id=chat_id,
+                                              message_id=update.callback_query.message.message_id,
+                                              text=menu,
+                                              parse_mode=telegram.ParseMode.HTML,
+                                              reply_markup=start_button_kb())
+            else:
+                context.bot.send_message(chat_id=chat_id, text=menu,
+                                         parse_mode=telegram.ParseMode.HTML, reply_markup=start_button_kb())
         logging.info(f"{chat_id}: {meal} menu sent to chat")
 
         if update.callback_query is not None:
