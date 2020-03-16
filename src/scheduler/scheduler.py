@@ -5,7 +5,8 @@ import logging
 from database.database import (
     get_broadcast_subscribers,
     get_raw_menu,
-    get_hidden_cuisines
+    get_hidden_cuisines,
+    update_subscribe_setting
 )
 from scheduler.scheduler_config import BREAKFAST_BROADCAST_TIME, DINNER_BROADCAST_TIME
 from util.const import BREAKFAST, DINNER
@@ -44,12 +45,17 @@ def meal_broadcast(meal):
         for user_id in subscribers:
             chat_id = user_id[0]  # extracts chat_id from nested [] from database
             hidden_cuisines = get_hidden_cuisines(chat_id)
-            context.bot.send_message(chat_id=chat_id,
-                                     text=menu_msg(localized_date_today(),
-                                                   meal,
-                                                   parse_menu(menu, hidden_cuisines)),
-                                     reply_markup=start_button_kb(),
-                                     parse_mode='HTML')
+            try:
+                context.bot.send_message(chat_id=chat_id,
+                                         text=menu_msg(localized_date_today(),
+                                                       meal,
+                                                       parse_menu(menu, hidden_cuisines)),
+                                         reply_markup=start_button_kb(),
+                                         parse_mode='HTML')
+            except Exception:
+                logging.warning(f"{chat_id}: exception occurs, reverting user's subscription status")
+                update_subscribe_setting(chat_id, meal)
+                continue
             logging.info(f"{chat_id}: {meal} menu broadcast")
 
         logging.info("meal broadcast finished")
