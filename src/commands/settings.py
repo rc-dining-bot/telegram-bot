@@ -1,4 +1,5 @@
 import telegram
+from telegram.ext import run_async
 
 from util.const import (
     BREAKFAST,
@@ -20,6 +21,7 @@ from util.messages import (
 
 
 # settings menu
+@run_async
 def handle_settings(update, context):
     if update.callback_query is not None:
         context.bot.edit_message_text(chat_id=update.effective_chat.id,
@@ -36,6 +38,7 @@ def handle_settings(update, context):
 
 
 # hidden cuisine panel
+@run_async
 def handle_hidden_cuisine(update, context):
     hidden_cuisine = get_hidden_cuisines(update.effective_chat.id)
     msg = no_hidden_cuisine_msg() if not hidden_cuisine else hidden_cuisine_msg(update.effective_chat.first_name)
@@ -64,6 +67,7 @@ def handle_hide_cuisine(update, context):
     update.callback_query.edit_message_reply_markup(reply_markup=hidden_cuisine_kb(updated_hidden_cuisine))
 
 
+@run_async
 def handle_notification(update, context):
     chat_id = update.effective_chat.id
     bf_sub, dn_sub = get_subscribe_setting(chat_id)

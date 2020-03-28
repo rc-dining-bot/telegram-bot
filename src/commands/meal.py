@@ -1,6 +1,7 @@
 import logging
 
 import telegram
+from telegram.ext import run_async
 
 from util.const import (
     BREAKFAST,
@@ -17,6 +18,7 @@ def handle_menu(meal):
     assert meal == BREAKFAST or meal == DINNER, "Meal input is incorrect."
 
     # in this function, parsed_date returns date in Singapore time. As such, no conversion is required.
+    @run_async
     def get_breakfast_or_dinner_menu(update, context):
         chat_id = update.effective_chat.id
         # send the user menu
